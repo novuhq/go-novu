@@ -23,7 +23,7 @@ import (
 )
 
 func main() {
-	apiKey := "ee35a7412bc654b3ac3b5cf649daa319"
+	apiKey := "c654b3ac3b5cee35a741f649daa3192b"
 	eventId := "gs-cooperative"
 
 	ctx := context.Background()

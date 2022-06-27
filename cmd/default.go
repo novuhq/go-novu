@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	subscriberID := "3ac3b5cf649daa319ee35a7412bc654b"
-	apiKey := "ee35a7412bc654b3ac3b5cf649daa319"
+	subscriberID := "e35a7412bc654b3ac3b5cf649daa319e"
+	apiKey := "c654b3ac3b5cee35a741f649daa3192b"
 	eventId := "gs-cooperative"
 
 	ctx := context.Background()
