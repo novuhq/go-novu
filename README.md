@@ -53,6 +53,8 @@ func main() {
 	fmt.Println(resp)
 }
 ```
+**NOTE**
+Check the `cmd` directory to see a sample implementation and test files to see sample tests
 
 ## Documentation for API Endpoints
 
