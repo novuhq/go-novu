@@ -58,10 +58,10 @@ func main() {
 
 Class | Method                                         | HTTP request                          | Description
 ------------ |------------------------------------------------|---------------------------------------| -------------
-*EventApi* | [**Trigger**](docs/SubscriberApi.md#identify) | **Post** /events/trigger              | Get your account information, plan and credits details
-*SubscriberApi* | [**Identify**](docs/SubscriberApi.md#identify) | **Post** /subscribers                 | Get your account information, plan and credits details
-*SubscriberApi* | [**Update**](docs/SubscriberApi.md#update)     | **Put** /subscribers/:subscriberID    | Get your account information, plan and credits details
-*SubscriberApi* | [**Delete**](docs/SubscriberApi.md#delete)     | **Delete** /subscribers/:subscriberID | Get your account information, plan and credits details
+*EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber) | **Post** /events/trigger              | Trigger
+*SubscriberApi* | [**Identify**](https://docs.novu.co/platform/subscribers#creating-a-subscriber) | **Post** /subscribers                 | Create a subscriber
+*SubscriberApi* | [**Update**](https://docs.novu.co/platform/subscribers#updating-subscriber-data)     | **Put** /subscribers/:subscriberID    | Update subscriber data
+*SubscriberApi* | [**Delete**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)     | **Delete** /subscribers/:subscriberID | Removing a subscriber
 
 ## Authorization (api-key)
 
