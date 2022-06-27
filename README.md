@@ -82,3 +82,4 @@ As always, if you need additional assistance, join our Discord us a note [here](
 Name |   
 ------------ |
 [Oyewole Samuel](https://github.com/samsoft00) |
+[Dima Grossman](https://github.com/scopsy) |
