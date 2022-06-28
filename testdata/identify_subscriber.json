@@ -1,0 +1,18 @@
+{
+  "title": "Mrs",
+  "first_name": "Junilvana",
+  "last_name": "Souza",
+  "email": "junilvana.souza@example.com",
+  "phone": "(86) 5889-7095",
+  "avatar": "https://randomuser.me/api/portraits/women/39.jpg",
+  "location": {
+    "street": {
+      "number": 97,
+      "name": "Rua Santo Antônio"
+    },
+    "city": "Itapipoca",
+    "state": "Mato Grosso",
+    "country": "Brazil",
+    "postcode": 92448
+  }
+}

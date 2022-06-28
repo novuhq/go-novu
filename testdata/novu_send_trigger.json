@@ -1,0 +1,14 @@
+{
+  "to": {
+    "subscriberId": "john@doemail.com",
+    "lastName":     "Doe",
+    "firstName":    "John",
+    "email":        "john@doemail.com"
+  },
+  "payload": {
+    "name": "Hello World",
+    "organization": {
+      "logo": "https://happycorp.com/logo.png"
+    }
+  }
+}
