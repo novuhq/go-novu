@@ -8,15 +8,15 @@ import (
 )
 
 func main() {
-	subscriberID := "e35a7412bc654b3ac3b5cf649daa319e"
-	apiKey := "c654b3ac3b5cee35a741f649daa3192b"
-	eventId := "gs-cooperative"
+	subscriberID := "<<REPLACE_WITH_YOUR_SUBSCRIBER>"
+	apiKey := "<REPLACE_WITH_YOUR_API_KEY>"
+	eventId := "<REPLACE_WITH_YOUR_EVENT_ID>"
 
 	ctx := context.Background()
 	to := map[string]interface{}{
 		"lastName":     "Doe",
 		"firstName":    "John",
-		"subscriberId": "john@doemail.com",
+		"subscriberId": subscriberID,
 		"email":        "john@doemail.com",
 	}
 
