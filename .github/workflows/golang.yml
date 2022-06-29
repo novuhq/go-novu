@@ -29,9 +29,6 @@ jobs:
       - name: Get dependencies
         run: |
           go get -t ./...
-          go get -u golang.org/x/lint/golint
 
-      - name: Run lint and Test
-        run: |
-          golint .
-          go test -v ./...
+      - name: Test
+        run: go test -v ./...
