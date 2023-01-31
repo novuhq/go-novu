@@ -3,15 +3,16 @@ package lib_test
 import (
 	"context"
 	"encoding/json"
-	"github.com/novuhq/go-novu/lib"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/requestoptix/go-novu/lib"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const subscriberID = "62b51a44da1af31d109f5da7"

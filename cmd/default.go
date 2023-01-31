@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	novu "github.com/novuhq/go-novu/lib"
 	"log"
+
+	novu "github.com/requestoptix/go-novu/lib"
 )
 
 func main() {

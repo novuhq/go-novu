@@ -5,7 +5,7 @@ Novu's API exposes the entire Novu features via a standardized programmatic inte
 ## Installation & Usage
 Install the package to your GoLang project.
 ```golang
-go get github.com/novuhq/go-novu
+go get github.com/requestoptix/go-novu
 ```
 
 ## Getting Started
@@ -18,7 +18,7 @@ package main
 import (
 	"context"
 	"fmt"
-	novu "github.com/novuhq/go-novu/lib"
+	novu "github.com/requestoptix/go-novu/lib"
 	"log"
 )
 
@@ -76,13 +76,13 @@ Class | Method                                         | HTTP request           
 
 Be sure to visit the Novu official [documentation website](https://docs.novu.co/docs) for additional information about our API.
 
-If you find a bug, please post the issue on [Github](https://github.com/novuhq/go-novu/issues).
+If you find a bug, please post the issue on [Github](https://github.com/requestoptix/go-novu/issues).
 
 As always, if you need additional assistance, join our Discord us a note [here](https://discord.gg/TT6TttXjRe).
 
 ## Contributors
 
-Name |   
+Name |
 ------------ |
 [Oyewole Samuel](https://github.com/samsoft00) |
 [Dima Grossman](https://github.com/scopsy) |

@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/novuhq/go-novu/lib"
-	"github.com/stretchr/testify/require"
 	"io"
 	"io/ioutil"
 	"log"
@@ -14,6 +12,9 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/requestoptix/go-novu/lib"
+	"github.com/stretchr/testify/require"
 
 	"github.com/stretchr/testify/assert"
 )
