@@ -1,4 +1,4 @@
-module github.com/novuhq/go-novu
+module github.com/requestoptix/go-novu
 
 go 1.18
 
