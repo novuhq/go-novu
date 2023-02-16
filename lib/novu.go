@@ -3,11 +3,12 @@ package lib
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"io"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 type Config struct {
@@ -23,6 +24,7 @@ type APIClient struct {
 	// Api Service
 	SubscriberApi *SubscriberService
 	EventApi      *EventService
+	TopicsApi     *TopicService
 }
 
 type service struct {
@@ -43,35 +45,41 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	// API Services
 	c.EventApi = (*EventService)(&c.common)
 	c.SubscriberApi = (*SubscriberService)(&c.common)
+	c.TopicsApi = (*TopicService)(&c.common)
 
 	return c
 }
 
-func (c APIClient) sendRequest(req *http.Request, resp interface{}) error {
+func (c APIClient) sendRequest(req *http.Request, resp interface{}) (*http.Response, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("ApiKey %s", c.apiKey))
 
 	res, err := c.config.HttpClient.Do(req)
 	if err != nil {
-		return errors.Wrap(err, "failed to execute request")
+		return res, errors.Wrap(err, "failed to execute request")
 	}
 
 	body, _ := io.ReadAll(res.Body)
 	defer res.Body.Close()
 
 	if res.StatusCode >= http.StatusMultipleChoices {
-		return errors.Errorf(
+		return res, errors.Errorf(
 			`request was not successful, status code %d, %s`, res.StatusCode,
 			string(body),
 		)
 	}
 
-	err = c.decode(&resp, body)
-	if err != nil {
-		return errors.Wrap(err, "unable to unmarshal response body")
+	if string(body) == "" {
+		resp = map[string]string{}
+		return res, nil
 	}
 
-	return nil
+	err = c.decode(&resp, body)
+	if err != nil {
+		return res, errors.Wrap(err, "unable to unmarshal response body")
+	}
+
+	return res, nil
 }
 
 func (c APIClient) mergeStruct(target, patch interface{}) (interface{}, error) {

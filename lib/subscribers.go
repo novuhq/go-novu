@@ -5,8 +5,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
+
+	"github.com/pkg/errors"
 )
 
 type ISubscribers interface {
@@ -33,7 +34,7 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 		return resp, err
 	}
 
-	err = s.client.sendRequest(req, &resp)
+	_, err = s.client.sendRequest(req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -52,7 +53,7 @@ func (s *SubscriberService) Update(ctx context.Context, subscriberID string, dat
 		return resp, err
 	}
 
-	err = s.client.sendRequest(req, &resp)
+	_, err = s.client.sendRequest(req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -69,7 +70,7 @@ func (s *SubscriberService) Delete(ctx context.Context, subscriberID string) (Su
 		return resp, err
 	}
 
-	err = s.client.sendRequest(req, &resp)
+	_, err = s.client.sendRequest(req, &resp)
 	if err != nil {
 		return resp, err
 	}

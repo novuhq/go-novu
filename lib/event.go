@@ -31,7 +31,7 @@ func (e *EventService) Trigger(ctx context.Context, eventId string, data ITrigge
 		return resp, err
 	}
 
-	err = e.client.sendRequest(req, &resp)
+	_, err = e.client.sendRequest(req, &resp)
 	if err != nil {
 		return resp, err
 	}
