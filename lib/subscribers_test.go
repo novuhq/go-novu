@@ -19,7 +19,7 @@ const subscriberID = "62b51a44da1af31d109f5da7"
 
 func TestSubscriberService_Identify_Success(t *testing.T) {
 	var (
-		subscriberPayload lib.SubscriberPayload
+		subscriberPayload lib.SubscriberIdentify
 		receivedBody      lib.SubscriberPayload
 		expectedRequest   lib.SubscriberPayload
 		expectedResponse  lib.SubscriberResponse
@@ -76,7 +76,7 @@ func TestSubscriberService_Identify_Success(t *testing.T) {
 
 func TestSubscriberService_Update_Success(t *testing.T) {
 	var (
-		updateSubscriber lib.SubscriberPayload
+		updateSubscriber lib.SubscriberIdentify
 		receivedBody     lib.SubscriberPayload
 		expectedRequest  lib.SubscriberPayload
 		expectedResponse lib.SubscriberResponse
