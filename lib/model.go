@@ -29,9 +29,11 @@ type Response struct {
 }
 
 type ITriggerPayloadOptions struct {
-	To        interface{} `json:"to,omitempty"`
-	Payload   interface{} `json:"payload,omitempty"`
-	Overrides interface{} `json:"overrides,omitempty"`
+	To            interface{} `json:"to,omitempty"`
+	Payload       interface{} `json:"payload,omitempty"`
+	Overrides     interface{} `json:"overrides,omitempty"`
+	TransactionId string      `json:"transactionId,omitempty"`
+	Actor         interface{} `json:"actor,omitempty"`
 }
 
 type TriggerRecipientsTypeArray interface {
@@ -70,10 +72,12 @@ type EventResponse struct {
 }
 
 type EventRequest struct {
-	Name      string      `json:"name"`
-	To        interface{} `json:"to"`
-	Payload   interface{} `json:"payload"`
-	Overrides interface{} `json:"overrides,omitempty"`
+	Name          string      `json:"name"`
+	To            interface{} `json:"to"`
+	Payload       interface{} `json:"payload"`
+	Overrides     interface{} `json:"overrides,omitempty"`
+	TransactionId string      `json:"transactionId,omitempty"`
+	Actor         interface{} `json:"actor,omitempty"`
 }
 
 type SubscriberResponse struct {
