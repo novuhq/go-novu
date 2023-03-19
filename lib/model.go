@@ -29,8 +29,9 @@ type Response struct {
 }
 
 type ITriggerPayloadOptions struct {
-	To      interface{} `json:"to,omitempty"`
-	Payload interface{} `json:"payload,omitempty"`
+	To        interface{} `json:"to,omitempty"`
+	Payload   interface{} `json:"payload,omitempty"`
+	Overrides interface{} `json:"overrides,omitempty"`
 }
 
 type TriggerRecipientsTypeArray interface {
@@ -69,9 +70,10 @@ type EventResponse struct {
 }
 
 type EventRequest struct {
-	Name    string      `json:"name"`
-	To      interface{} `json:"to"`
-	Payload interface{} `json:"payload"`
+	Name      string      `json:"name"`
+	To        interface{} `json:"to"`
+	Payload   interface{} `json:"payload"`
+	Overrides interface{} `json:"overrides,omitempty"`
 }
 
 type SubscriberResponse struct {

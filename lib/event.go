@@ -19,9 +19,10 @@ func (e *EventService) Trigger(ctx context.Context, eventId string, data ITrigge
 	URL := fmt.Sprintf(e.client.config.BackendURL+"/%s", "events/trigger")
 
 	reqBody := EventRequest{
-		Name:    eventId,
-		To:      data.To,
-		Payload: data.Payload,
+		Name:      eventId,
+		To:        data.To,
+		Payload:   data.Payload,
+		Overrides: data.Overrides,
 	}
 
 	jsonBody, _ := json.Marshal(reqBody)
