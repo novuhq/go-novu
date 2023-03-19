@@ -1,0 +1,11 @@
+{
+  "to": {
+    "topicKey": "topicKey"
+  },
+  "payload": {
+    "name": "Hello World",
+    "organization": {
+      "logo": "https://happycorp.com/logo.png"
+    }
+  }
+}

@@ -8,9 +8,10 @@ type GeneralError error
 const Version = "v1"
 
 const (
-	HTTPStatusOk      = 200
-	HTTPStatusCreated = 201
-	HTTPRedirectOk    = 300
+	HTTPStatusOk       = 200
+	HTTPStatusCreated  = 201
+	HTTPStatusNoChange = 204
+	HTTPRedirectOk     = 300
 )
 
 const (
@@ -43,6 +44,11 @@ type TriggerRecipientsTypeSingle interface {
 	string | SubscriberPayload
 }
 
+type TriggerTopicRecipientsTypeSingle struct {
+	TopicKey string `json:"topicKey,omitempty"`
+	Type     string `json:"type,omitempty"`
+}
+
 type SubscriberPayload struct {
 	FirstName string                 `json:"first_name,omitempty"`
 	LastName  string                 `json:"last_name,omitempty"`
@@ -53,7 +59,7 @@ type SubscriberPayload struct {
 }
 
 type TriggerRecipientsType interface {
-	TriggerRecipientsTypeSingle | TriggerRecipientsTypeArray
+	TriggerRecipientsTypeSingle | TriggerRecipientsTypeArray | TriggerTopicRecipientsTypeSingle | []TriggerTopicRecipientsTypeSingle
 }
 
 type ITriggerPayload interface {
@@ -82,4 +88,39 @@ type EventRequest struct {
 
 type SubscriberResponse struct {
 	Data interface{} `json:"data"`
+}
+
+type ListTopicsResponse struct {
+	Page       int                `json:"name"`
+	PageSize   int                `json:"pageSize"`
+	TotalCount int                `json:"totalCount"`
+	Data       []GetTopicResponse `json:"data"`
+}
+
+type GetTopicResponse struct {
+	Id             string   `json:"_id"`
+	OrganizationId string   `json:"_organizationId"`
+	EnvironmentId  string   `json:"_environmentId"`
+	Key            string   `json:"key"`
+	Name           string   `json:"name"`
+	Subscribers    []string `json:"subscribers"`
+}
+
+type ListTopicsOptions struct {
+	Page     *int    `json:"page,omitempty"`
+	PageSize *int    `json:"pageSize,omitempty"`
+	Key      *string `json:"key,omitempty"`
+}
+
+type CreateTopicRequest struct {
+	Name string `json:"name"`
+	Key  string `json:"key"`
+}
+
+type RenameTopicRequest struct {
+	Name string `json:"name"`
+}
+
+type SubscribersTopicRequest struct {
+	Subscribers []string `json:"subscribers"`
 }
