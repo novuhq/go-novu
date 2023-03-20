@@ -5,14 +5,20 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
 	"github.com/pkg/errors"
 )
 
+const (
+	NovuURL     = "https://api.novu.co"
+	NovuVersion = "v1"
+)
+
 type Config struct {
-	BackendURL string
+	BackendURL *url.URL
 	HttpClient *http.Client
 }
 
@@ -101,15 +107,16 @@ func (c APIClient) decode(v interface{}, b []byte) (err error) {
 	return nil
 }
 
-func buildBackendURL(cfg *Config) string {
-	novuVersion := "v1"
+func buildBackendURL(cfg *Config) *url.URL {
 
-	if cfg.BackendURL == "" {
-		return fmt.Sprintf("https://api.novu.co/%s", novuVersion)
+	if cfg.BackendURL == nil {
+		rawURL := fmt.Sprintf("%s/%s", NovuURL, NovuVersion)
+		return MustParseURL(rawURL)
 	}
 
-	if strings.Contains(cfg.BackendURL, "novu.co/v") {
+	if strings.Contains(cfg.BackendURL.String(), "novu.co/v") {
 		return cfg.BackendURL
 	}
-	return fmt.Sprintf(cfg.BackendURL+"/%s", novuVersion)
+
+	return cfg.BackendURL.JoinPath(NovuVersion)
 }

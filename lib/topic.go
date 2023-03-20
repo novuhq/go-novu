@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -23,7 +22,7 @@ type TopicService service
 
 func (t *TopicService) Create(ctx context.Context, key string, name string) error {
 	var resp interface{}
-	URL := fmt.Sprintf(t.client.config.BackendURL+"/%s", "topics")
+	URL := t.client.config.BackendURL.JoinPath("topics")
 
 	reqBody := CreateTopicRequest{
 		Name: name,
@@ -32,7 +31,7 @@ func (t *TopicService) Create(ctx context.Context, key string, name string) erro
 
 	jsonBody, _ := json.Marshal(reqBody)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return err
 	}
@@ -51,14 +50,14 @@ func (t *TopicService) Create(ctx context.Context, key string, name string) erro
 
 func (t *TopicService) List(ctx context.Context, options *ListTopicsOptions) (*ListTopicsResponse, error) {
 	var resp ListTopicsResponse
-	URL := fmt.Sprintf(t.client.config.BackendURL+"/%s", "topics")
+	URL := t.client.config.BackendURL.JoinPath("topics")
 
 	if options == nil {
 		options = &ListTopicsOptions{}
 	}
 	queryParams, _ := json.Marshal(options)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL, bytes.NewBuffer(queryParams))
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), bytes.NewBuffer(queryParams))
 	if err != nil {
 		return nil, err
 	}
@@ -72,13 +71,13 @@ func (t *TopicService) List(ctx context.Context, options *ListTopicsOptions) (*L
 }
 
 func (t *TopicService) AddSubscribers(ctx context.Context, key string, subscribers []string) error {
-	URL := fmt.Sprintf(t.client.config.BackendURL+"/%s/%s/subscribers", "topics", key)
+	URL := t.client.config.BackendURL.JoinPath("topics", key, "subscribers")
 
 	queryParams, _ := json.Marshal(SubscribersTopicRequest{
 		Subscribers: subscribers,
 	})
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL, bytes.NewBuffer(queryParams))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(queryParams))
 	if err != nil {
 		return err
 	}
@@ -93,13 +92,13 @@ func (t *TopicService) AddSubscribers(ctx context.Context, key string, subscribe
 }
 
 func (t *TopicService) RemoveSubscribers(ctx context.Context, key string, subscribers []string) error {
-	URL := fmt.Sprintf(t.client.config.BackendURL+"/%s/%s/subscribers/removal", "topics", key)
+	URL := t.client.config.BackendURL.JoinPath("topics", key, "subscribers/removal")
 
 	queryParams, _ := json.Marshal(SubscribersTopicRequest{
 		Subscribers: subscribers,
 	})
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL, bytes.NewBuffer(queryParams))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(queryParams))
 	if err != nil {
 		return err
 	}
@@ -114,9 +113,9 @@ func (t *TopicService) RemoveSubscribers(ctx context.Context, key string, subscr
 
 func (t *TopicService) Get(ctx context.Context, key string) (*GetTopicResponse, error) {
 	var resp GetTopicResponse
-	URL := fmt.Sprintf(t.client.config.BackendURL+"/%s/%s", "topics", key)
+	URL := t.client.config.BackendURL.JoinPath("topics", key)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL, bytes.NewBuffer([]byte{}))
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), bytes.NewBuffer([]byte{}))
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +130,7 @@ func (t *TopicService) Get(ctx context.Context, key string) (*GetTopicResponse, 
 
 func (t *TopicService) Rename(ctx context.Context, key string, name string) (*GetTopicResponse, error) {
 	var resp GetTopicResponse
-	URL := fmt.Sprintf(t.client.config.BackendURL+"/%s/%s", "topics", key)
+	URL := t.client.config.BackendURL.JoinPath("topics", key)
 
 	reqBody := RenameTopicRequest{
 		Name: name,
@@ -139,7 +138,7 @@ func (t *TopicService) Rename(ctx context.Context, key string, name string) (*Ge
 
 	jsonBody, _ := json.Marshal(reqBody)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPatch, URL, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPatch, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return nil, err
 	}

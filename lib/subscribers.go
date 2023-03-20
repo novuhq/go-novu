@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -20,7 +19,7 @@ type SubscriberService service
 
 func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error) {
 	var resp SubscriberResponse
-	URL := fmt.Sprintf(s.client.config.BackendURL+"/%s", "subscribers")
+	URL := s.client.config.BackendURL.JoinPath("subscribers")
 
 	reqBody, err := s.client.mergeStruct(data, map[string]interface{}{"subscriberId": subscriberID})
 	if err != nil {
@@ -29,7 +28,7 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 
 	jsonBody, _ := json.Marshal(reqBody)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return resp, err
 	}
@@ -44,11 +43,11 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 
 func (s *SubscriberService) Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error) {
 	var resp SubscriberResponse
-	URL := fmt.Sprintf(s.client.config.BackendURL+"/subscribers/%s", subscriberID)
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID)
 
 	jsonBody, _ := json.Marshal(data)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPut, URL, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return resp, err
 	}
@@ -63,9 +62,9 @@ func (s *SubscriberService) Update(ctx context.Context, subscriberID string, dat
 
 func (s *SubscriberService) Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error) {
 	var resp SubscriberResponse
-	URL := fmt.Sprintf(s.client.config.BackendURL+"/subscribers/%s", subscriberID)
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, URL, http.NoBody)
+	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, URL.String(), http.NoBody)
 	if err != nil {
 		return resp, err
 	}

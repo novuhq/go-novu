@@ -61,7 +61,7 @@ func TestSubscriberService_Identify_Success(t *testing.T) {
 	ctx := context.Background()
 	fileToStruct(filepath.Join("../testdata", "identify_subscriber.json"), &subscriberPayload)
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: subscriberService.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
 
 	resp, err := c.SubscriberApi.Identify(ctx, subscriberID, subscriberPayload)
 	require.Nil(t, err)
@@ -116,7 +116,7 @@ func TestSubscriberService_Update_Success(t *testing.T) {
 	ctx := context.Background()
 	fileToStruct(filepath.Join("../testdata", "update_subscriber.json"), &updateSubscriber)
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: subscriberService.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
 
 	resp, err := c.SubscriberApi.Update(ctx, subscriberID, updateSubscriber)
 	require.Nil(t, err)
@@ -154,7 +154,7 @@ func TestSubscriberService_Delete_Success(t *testing.T) {
 		w.Write(bb)
 	}))
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: subscriberService.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
 
 	resp, err := c.SubscriberApi.Delete(ctx, subscriberID)
 	require.Nil(t, err)

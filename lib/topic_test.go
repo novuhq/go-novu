@@ -85,7 +85,7 @@ func TestCreateTopic_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: httpServer.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	err := c.TopicsApi.Create(ctx, "topicKey", "topic")
 
 	require.NoError(t, err)
@@ -106,7 +106,7 @@ func TestAddSubscription_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: httpServer.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	err := c.TopicsApi.AddSubscribers(ctx, key, subs)
 
 	require.NoError(t, err)
@@ -127,7 +127,7 @@ func TestAddSubscriptionRemoval_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: httpServer.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	err := c.TopicsApi.RemoveSubscribers(ctx, key, subs)
 
 	require.NoError(t, err)
@@ -154,7 +154,7 @@ func TestGetTopic_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: httpServer.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	resp, err := c.TopicsApi.Get(ctx, key)
 
 	require.NoError(t, err)
@@ -186,7 +186,7 @@ func TestListTopics_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: httpServer.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	resp, err := c.TopicsApi.List(ctx, nil)
 
 	require.NoError(t, err)
@@ -217,7 +217,7 @@ func TestRenameTopic_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: httpServer.URL})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	resp, err := c.TopicsApi.Rename(ctx, topicKey, newName)
 
 	require.NoError(t, err)
