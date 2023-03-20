@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -16,7 +15,7 @@ type EventService service
 
 func (e *EventService) Trigger(ctx context.Context, eventId string, data ITriggerPayloadOptions) (EventResponse, error) {
 	var resp EventResponse
-	URL := fmt.Sprintf(e.client.config.BackendURL+"/%s", "events/trigger")
+	URL := e.client.config.BackendURL.JoinPath("events/trigger")
 
 	reqBody := EventRequest{
 		Name:          eventId,
@@ -29,7 +28,7 @@ func (e *EventService) Trigger(ctx context.Context, eventId string, data ITrigge
 
 	jsonBody, _ := json.Marshal(reqBody)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return resp, err
 	}
