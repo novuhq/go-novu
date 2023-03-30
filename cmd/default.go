@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	novu "github.com/novuhq/go-novu/lib"
+	"github.com/novuhq/go-novu/utils"
 	"log"
 )
 
@@ -82,4 +83,15 @@ func main() {
 		return
 	}
 	fmt.Println(deleteResp)
+
+	// Get Notification
+	_, err = novuClient.NotificationApi.GetNotifications(ctx,
+		utils.NewQueryParam("channels", []string{"z", "q"}),
+		utils.NewQueryParam("templates", []string{}),
+		utils.NewQueryParam("emails", ""),
+		utils.NewQueryParam("search", ""))
+
+	if err != nil {
+		panic(err)
+	}
 }

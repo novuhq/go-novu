@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/novuhq/go-novu/utils"
 	"io"
 	"log"
 	"net/http"
@@ -74,7 +75,7 @@ func TestEventServiceTrigger_Success(t *testing.T) {
 	ctx := context.Background()
 	fileToStruct(filepath.Join("../testdata", "novu_send_trigger.json"), &triggerPayload)
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(eventService.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(eventService.URL)})
 	_, err := c.EventApi.Trigger(ctx, novuEventId, triggerPayload)
 
 	require.Nil(t, err)
@@ -124,7 +125,7 @@ func TestEventServiceTriggerForTopic_Success(t *testing.T) {
 	ctx := context.Background()
 	fileToStruct(filepath.Join("../testdata", "novu_send_trigger_topic_recipient.json"), &triggerPayload)
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(eventService.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(eventService.URL)})
 	_, err := c.EventApi.Trigger(ctx, novuEventId, triggerPayload)
 
 	require.Nil(t, err)
