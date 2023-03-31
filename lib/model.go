@@ -16,8 +16,8 @@ const (
 
 const (
 	EMAIL  ChannelType = "EMAIL"
-	SMS                = "SMS"
-	DIRECT             = "DIRECT"
+	SMS    ChannelType = "SMS"
+	DIRECT ChannelType = "DIRECT"
 )
 
 type Data struct {
@@ -88,6 +88,42 @@ type EventRequest struct {
 
 type SubscriberResponse struct {
 	Data interface{} `json:"data"`
+}
+
+type Template struct {
+	ID       string `json:"_id"`
+	Name     string `json:"name"`
+	Critical bool   `json:"critical"`
+}
+
+type Preference struct {
+	Enabled  bool    `json:"enabled"`
+	Channels Channel `json:"channels"`
+}
+
+type Channel struct {
+	Email bool `json:"email"`
+	Sms   bool `json:"sms"`
+	Chat  bool `json:"chat"`
+	InApp bool `json:"in_app"`
+	Push  bool `json:"push"`
+}
+
+type SubscriberPreferencesResponse struct {
+	Data []struct {
+		Template   Template   `json:"template"`
+		Preference Preference `json:"preference"`
+	} `json:"data"`
+}
+
+type UpdateSubscriberPreferencesChannel struct {
+	Type    ChannelType `json:"type"`
+	Enabled bool        `json:"enabled"`
+}
+
+type UpdateSubscriberPreferencesOptions struct {
+	Channel []UpdateSubscriberPreferencesChannel `json:"channel,omitempty"`
+	Enabled bool                                 `json:"enabled,omitempty"`
 }
 
 type ListTopicsResponse struct {
