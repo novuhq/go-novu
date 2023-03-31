@@ -3,15 +3,18 @@ package lib_test
 import (
 	"context"
 	"encoding/json"
-	"github.com/novuhq/go-novu/lib"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/novuhq/go-novu/lib"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const subscriberID = "62b51a44da1af31d109f5da7"
@@ -164,4 +167,75 @@ func TestSubscriberService_Delete_Success(t *testing.T) {
 		fileToStruct(filepath.Join("../testdata", "subscriber_response.json"), &expectedResponse)
 		assert.Equal(t, expectedResponse, resp)
 	})
+}
+
+func TestSubscriberService_GetSubscriber_Success(t *testing.T) {
+	var expectedResponse lib.SubscriberResponse
+	fileToStruct(filepath.Join("../testdata", "subscriber_response.json"), &expectedResponse)
+
+	httpServer := createTestServer(t, TestServerOptions[io.Reader, *lib.SubscriberResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s", subscriberID),
+		expectedSentMethod: http.MethodGet,
+		expectedSentBody:   http.NoBody,
+		responseStatusCode: http.StatusOK,
+		responseBody:       &expectedResponse,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	resp, err := c.SubscriberApi.Get(ctx, subscriberID)
+
+	require.NoError(t, err)
+	require.Equal(t, resp, expectedResponse)
+}
+
+func TestSubscriberService_GetPreferences_Success(t *testing.T) {
+	var expectedResponse *lib.SubscriberPreferencesResponse
+	fileToStruct(filepath.Join("../testdata", "subscriber_preferences_response.json"), &expectedResponse)
+
+	httpServer := createTestServer(t, TestServerOptions[map[string]string, *lib.SubscriberPreferencesResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/preferences", subscriberID),
+		expectedSentMethod: http.MethodGet,
+		expectedSentBody:   map[string]string{},
+		responseStatusCode: http.StatusOK,
+		responseBody:       expectedResponse,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	resp, err := c.SubscriberApi.GetPreferences(ctx, subscriberID)
+
+	require.NoError(t, err)
+	require.Equal(t, resp, expectedResponse)
+}
+
+func TestSubscriberService_UpdatePreferences_Success(t *testing.T) {
+	var topicID = "topicId"
+
+	var expectedResponse *lib.SubscriberPreferencesResponse
+	fileToStruct(filepath.Join("../testdata", "subscriber_preferences_response.json"), &expectedResponse)
+
+	var opts *lib.UpdateSubscriberPreferencesOptions = &lib.UpdateSubscriberPreferencesOptions{
+		Enabled: true,
+		Channel: []lib.UpdateSubscriberPreferencesChannel{
+			{
+				Type:    "email",
+				Enabled: true,
+			},
+		},
+	}
+	httpServer := createTestServer(t, TestServerOptions[*lib.UpdateSubscriberPreferencesOptions, *lib.SubscriberPreferencesResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/preferences/%s", subscriberID, topicID),
+		expectedSentMethod: http.MethodPatch,
+		expectedSentBody:   opts,
+		responseStatusCode: http.StatusOK,
+		responseBody:       expectedResponse,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	resp, err := c.SubscriberApi.UpdatePreferences(ctx, subscriberID, topicID, opts)
+
+	require.NoError(t, err)
+	require.Equal(t, resp, expectedResponse)
 }
