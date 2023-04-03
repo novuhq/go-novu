@@ -84,6 +84,13 @@ func main() {
 	}
 	fmt.Println(deleteResp)
 
+	// get integrations
+	integrations, err := novuClient.IntegrationsApi.GetAll(ctx)
+	if err != nil {
+		log.Fatal("Get all integrations error: ", err.Error())
+	}
+	fmt.Println(integrations)
+
 	// Get Notification
 	_, err = novuClient.NotificationApi.GetNotifications(ctx,
 		utils.NewQueryParam("channels", []string{"z", "q"}),

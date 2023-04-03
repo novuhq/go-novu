@@ -17,19 +17,19 @@ type INotifications interface {
 
 type NotificationService service
 
-type Subscriber struct{}
-type Template struct{}
+type NotificationSubscriber struct{}
+type NotificationTemplate struct{}
 
 type Notification struct {
-	ID             string     `json:"_id"`
-	EnvironmentID  string     `json:"_environmentId"`
-	OrganizationID string     `json:"_organizationId"`
-	TransactionID  string     `json:"transactionId"`
-	CreatedAt      time.Time  `json:"createdAt"`
-	Channels       string     `json:"channels"`
-	Subscriber     Subscriber `json:"subscriber"`
-	Template       Template   `json:"template"`
-	Jobs           []string   `json:"jobs"`
+	ID             string                 `json:"_id"`
+	EnvironmentID  string                 `json:"_environmentId"`
+	OrganizationID string                 `json:"_organizationId"`
+	TransactionID  string                 `json:"transactionId"`
+	CreatedAt      time.Time              `json:"createdAt"`
+	Channels       string                 `json:"channels"`
+	Subscriber     NotificationSubscriber `json:"subscriber"`
+	Template       NotificationTemplate   `json:"template"`
+	Jobs           []string               `json:"jobs"`
 }
 
 type NotificationResponse struct {
