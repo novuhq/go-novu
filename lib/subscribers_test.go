@@ -4,6 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/novuhq/go-novu/lib"
+	"github.com/novuhq/go-novu/utils"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"io"
 	"log"
 	"net/http"
@@ -11,10 +15,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/novuhq/go-novu/lib"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 const subscriberID = "62b51a44da1af31d109f5da7"
@@ -64,7 +64,7 @@ func TestSubscriberService_Identify_Success(t *testing.T) {
 	ctx := context.Background()
 	fileToStruct(filepath.Join("../testdata", "identify_subscriber.json"), &subscriberPayload)
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(subscriberService.URL)})
 
 	resp, err := c.SubscriberApi.Identify(ctx, subscriberID, subscriberPayload)
 	require.Nil(t, err)
@@ -119,7 +119,7 @@ func TestSubscriberService_Update_Success(t *testing.T) {
 	ctx := context.Background()
 	fileToStruct(filepath.Join("../testdata", "update_subscriber.json"), &updateSubscriber)
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(subscriberService.URL)})
 
 	resp, err := c.SubscriberApi.Update(ctx, subscriberID, updateSubscriber)
 	require.Nil(t, err)
@@ -157,7 +157,7 @@ func TestSubscriberService_Delete_Success(t *testing.T) {
 		w.Write(bb)
 	}))
 
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(subscriberService.URL)})
 
 	resp, err := c.SubscriberApi.Delete(ctx, subscriberID)
 	require.Nil(t, err)
@@ -182,7 +182,7 @@ func TestSubscriberService_GetSubscriber_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 	resp, err := c.SubscriberApi.Get(ctx, subscriberID)
 
 	require.NoError(t, err)
@@ -202,7 +202,7 @@ func TestSubscriberService_GetPreferences_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 	resp, err := c.SubscriberApi.GetPreferences(ctx, subscriberID)
 
 	require.NoError(t, err)
@@ -233,7 +233,7 @@ func TestSubscriberService_UpdatePreferences_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 	resp, err := c.SubscriberApi.UpdatePreferences(ctx, subscriberID, topicID, opts)
 
 	require.NoError(t, err)

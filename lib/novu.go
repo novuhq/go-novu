@@ -3,6 +3,7 @@ package lib
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/novuhq/go-novu/utils"
 	"io"
 	"net/http"
 	"net/url"
@@ -27,10 +28,11 @@ type APIClient struct {
 	config *Config
 	common service
 
-	// Api Service
+	// Api service
 	SubscriberApi   *SubscriberService
 	EventApi        *EventService
 	TopicsApi       *TopicService
+	NotificationApi *NotificationService
 	IntegrationsApi *IntegrationService
 }
 
@@ -53,6 +55,7 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	c.EventApi = (*EventService)(&c.common)
 	c.SubscriberApi = (*SubscriberService)(&c.common)
 	c.TopicsApi = (*TopicService)(&c.common)
+	c.NotificationApi = (*NotificationService)(&c.common)
 	c.IntegrationsApi = (*IntegrationService)(&c.common)
 
 	return c
@@ -113,7 +116,7 @@ func buildBackendURL(cfg *Config) *url.URL {
 
 	if cfg.BackendURL == nil {
 		rawURL := fmt.Sprintf("%s/%s", NovuURL, NovuVersion)
-		return MustParseURL(rawURL)
+		return utils.MustParseURL(rawURL)
 	}
 
 	if strings.Contains(cfg.BackendURL.String(), "novu.co/v") {

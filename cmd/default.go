@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
-
 	novu "github.com/novuhq/go-novu/lib"
+	"github.com/novuhq/go-novu/utils"
+	"log"
 )
 
 func main() {
@@ -90,4 +90,15 @@ func main() {
 		log.Fatal("Get all integrations error: ", err.Error())
 	}
 	fmt.Println(integrations)
+
+	// Get Notification
+	_, err = novuClient.NotificationApi.GetNotifications(ctx,
+		utils.NewQueryParam("channels", []string{"z", "q"}),
+		utils.NewQueryParam("templates", []string{}),
+		utils.NewQueryParam("emails", ""),
+		utils.NewQueryParam("search", ""))
+
+	if err != nil {
+		panic(err)
+	}
 }

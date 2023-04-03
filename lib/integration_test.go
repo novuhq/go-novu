@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/novuhq/go-novu/utils"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -109,7 +110,7 @@ func TestCreateIntegration_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 	res, err := novuClient.IntegrationsApi.Create(ctx, createIntegrationRequest)
 
 	assert.Equal(t, response, res)
@@ -134,7 +135,7 @@ func TestGetAllIntegration_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 
 	res, err := novuClient.IntegrationsApi.GetAll(ctx)
 
@@ -160,7 +161,7 @@ func TestGetActiveIntegration_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 
 	res, err := novuClient.IntegrationsApi.GetActive(ctx)
 
@@ -197,7 +198,7 @@ func TestUpdateIntegration_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 
 	res, err := novuClient.IntegrationsApi.Update(ctx, integrationId, updateIntegrationRequest)
 
@@ -224,7 +225,7 @@ func TestDeleteActiveIntegration_Success(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: utils.MustParseURL(httpServer.URL)})
 
 	res, err := novuClient.IntegrationsApi.Delete(ctx, integrationId)
 
