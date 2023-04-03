@@ -52,6 +52,13 @@ func main() {
 	}
 
 	fmt.Println(resp)
+
+	// get integrations
+	integrations, err := novuClient.IntegrationsApi.GetAll(ctx)
+	if err != nil {
+		log.Fatal("Get all integrations error: ", err.Error())
+	}
+	fmt.Println(integrations)
 }
 ```
 **NOTE**
@@ -59,15 +66,20 @@ Check the `cmd` directory to see a sample implementation and test files to see s
 
 ## Documentation for API Endpoints
 
-Class | Method                                         | HTTP request                          | Description
------------- |------------------------------------------------|---------------------------------------| -------------
-*EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber) | **Post** /events/trigger              | Trigger
+Class | Method                                                                           | HTTP request                            | Description
+------------ |----------------------------------------------------------------------------------|-----------------------------------------| -------------
+*EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)   | **Post** /events/trigger                | Trigger
 *SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber/) | **Get** /subscribers/:subscriberId                 | Get a subscriber
 *SubscriberApi* | [**Identify**](https://docs.novu.co/platform/subscribers#creating-a-subscriber) | **Post** /subscribers                 | Create a subscriber
 *SubscriberApi* | [**Update**](https://docs.novu.co/platform/subscribers#updating-subscriber-data)     | **Put** /subscribers/:subscriberID    | Update subscriber data
 *SubscriberApi* | [**Delete**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)     | **Delete** /subscribers/:subscriberID | Removing a subscriber
 *SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber-preferences/)     | **Get** /subscribers/:subscriberId/preferences | Get subscriber preferences
 *SubscriberApi* | [**Patch**](https://docs.novu.co/api/update-subscriber-preference/)     | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference
+*IntegrationsApi* | [**Create**](https://docs.novu.co/platform/integrations)                         | **Post** /integrations                  | Create an integration
+*IntegrationsApi* | [**Update**](https://docs.novu.co/platform/integrations)                         | **Put** /integrations/:integrationId    | Update an integration
+*IntegrationsApi* | [**Delete**](https://docs.novu.co/platform/integrations)                         | **Delete** /integrations/:integrationId | Delete an integration
+*IntegrationsApi* | [**Get**](https://docs.novu.co/platform/integrations)                            | **Get** /integrations                   | Get all integrations
+*IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/intergations)                      | **Get** /integrations/active            | Get all active integrations
 
 ## Authorization (api-key)
 

@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	novu "github.com/novuhq/go-novu/lib"
 	"log"
+
+	novu "github.com/novuhq/go-novu/lib"
 )
 
 func main() {
@@ -82,4 +83,11 @@ func main() {
 		return
 	}
 	fmt.Println(deleteResp)
+
+	// get integrations
+	integrations, err := novuClient.IntegrationsApi.GetAll(ctx)
+	if err != nil {
+		log.Fatal("Get all integrations error: ", err.Error())
+	}
+	fmt.Println(integrations)
 }

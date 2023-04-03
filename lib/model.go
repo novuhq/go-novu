@@ -160,3 +160,62 @@ type RenameTopicRequest struct {
 type SubscribersTopicRequest struct {
 	Subscribers []string `json:"subscribers"`
 }
+
+type IntegrationCredentials struct {
+	ApiKey           string                 `json:"apiKey,omitempty"`
+	User             string                 `json:"user,omitempty"`
+	SecretKey        string                 `json:"secretKey,omitempty"`
+	Domain           string                 `json:"domain,omitempty"`
+	Password         string                 `json:"password,omitempty"`
+	Host             string                 `json:"host,omitempty"`
+	Port             string                 `json:"port,omitempty"`
+	Secure           bool                   `json:"secure,omitempty"`
+	Region           string                 `json:"region,omitempty"`
+	AccountSID       string                 `json:"accountSid,omitempty"`
+	MessageProfileID string                 `json:"messageProfileId,omitempty"`
+	Token            string                 `json:"token,omitempty"`
+	From             string                 `json:"from,omitempty"`
+	SenderName       string                 `json:"senderName,omitempty"`
+	ProjectName      string                 `json:"projectName,omitempty"`
+	ApplicationID    string                 `json:"applicationId,omitempty"`
+	ClientID         string                 `json:"clientId,omitempty"`
+	RequireTls       bool                   `json:"requireTls,omitempty"`
+	IgnoreTls        bool                   `json:"ignoreTls,omitempty"`
+	TlsOptions       map[string]interface{} `json:"tlsOptions,omitempty"`
+}
+
+type CreateIntegrationRequest struct {
+	ProviderID  string                 `json:"providerId"`
+	Channel     ChannelType            `json:"channel"`
+	Credentials IntegrationCredentials `json:"credentials,omitempty"`
+	Active      bool                   `json:"active"`
+	Check       bool                   `json:"check"`
+}
+
+type UpdateIntegrationRequest struct {
+	Credentials IntegrationCredentials `json:"credentials"`
+	Active      bool                   `json:"active"`
+	Check       bool                   `json:"check"`
+}
+
+type Integration struct {
+	Id             string                 `json:"_id"`
+	EnvironmentID  string                 `json:"_environmentId"`
+	OrganizationID string                 `json:"_organizationId"`
+	ProviderID     string                 `json:"providerId"`
+	Channel        ChannelType            `json:"channel"`
+	Credentials    IntegrationCredentials `json:"credentials"`
+	Active         bool                   `json:"active"`
+	Deleted        bool                   `json:"deleted"`
+	UpdatedAt      string                 `json:"updatedAt"`
+	DeletedAt      string                 `json:"deletedAt"`
+	DeletedBy      string                 `json:"deletedBy"`
+}
+
+type IntegrationResponse struct {
+	Data Integration `json:"data"`
+}
+
+type GetIntegrationsResponse struct {
+	Data []Integration `json:"data"`
+}
