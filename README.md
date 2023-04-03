@@ -62,9 +62,12 @@ Check the `cmd` directory to see a sample implementation and test files to see s
 Class | Method                                         | HTTP request                          | Description
 ------------ |------------------------------------------------|---------------------------------------| -------------
 *EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber) | **Post** /events/trigger              | Trigger
+*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber/) | **Get** /subscribers/:subscriberId                 | Get a subscriber
 *SubscriberApi* | [**Identify**](https://docs.novu.co/platform/subscribers#creating-a-subscriber) | **Post** /subscribers                 | Create a subscriber
 *SubscriberApi* | [**Update**](https://docs.novu.co/platform/subscribers#updating-subscriber-data)     | **Put** /subscribers/:subscriberID    | Update subscriber data
 *SubscriberApi* | [**Delete**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)     | **Delete** /subscribers/:subscriberID | Removing a subscriber
+*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber-preferences/)     | **Get** /subscribers/:subscriberId/preferences | Get subscriber preferences
+*SubscriberApi* | [**Patch**](https://docs.novu.co/api/update-subscriber-preference/)     | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference
 
 ## Authorization (api-key)
 

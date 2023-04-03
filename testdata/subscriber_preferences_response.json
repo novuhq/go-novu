@@ -1,0 +1,55 @@
+{
+  "data": [
+    {
+      "template": {
+        "_id": "6c65c6b0eaf3900ecab1aa33",
+        "name": "Build Events",
+        "critical": false
+      },
+      "preference": {
+        "enabled": true,
+        "channels": {
+          "in_app": true
+        }
+      }
+    },
+    {
+      "template": {
+        "_id": "d773a4a4a4f4e405d51c0ecf",
+        "name": "New user signup",
+        "critical": false
+      },
+      "preference": {
+        "enabled": true,
+        "channels": {}
+      }
+    },
+    {
+      "template": {
+        "_id": "5c1c5b8d98c1a7f4fb5fbd2e",
+        "name": "Test Notification",
+        "critical": true
+      },
+      "preference": {
+        "enabled": true,
+        "channels": {
+          "email": true,
+          "chat": true
+        }
+      }
+    },
+    {
+      "template": {
+        "_id": "0e22a702b31f1d40bc46d87a",
+        "name": "updates",
+        "critical": false
+      },
+      "preference": {
+        "enabled": true,
+        "channels": {
+          "in_app": true
+        }
+      }
+    }
+  ]
+}
