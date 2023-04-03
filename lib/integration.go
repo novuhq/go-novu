@@ -5,8 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-
-	"github.com/pkg/errors"
 )
 
 type IIntegration interface {
@@ -19,12 +17,12 @@ type IIntegration interface {
 
 type IntegrationService service
 
-func (integration *IntegrationService) Create(ctx context.Context, request CreateIntegrationRequest) (*IntegrationResponse, error) {
+func (i IntegrationService) Create(ctx context.Context, request CreateIntegrationRequest) (*IntegrationResponse, error) {
 	var response IntegrationResponse
-	Url := integration.client.config.BackendURL.JoinPath("integrations")
+	URL := i.client.config.BackendURL.JoinPath("integrations")
 
 	requestBody := CreateIntegrationRequest{
-		ProviderId:  request.ProviderId,
+		ProviderID:  request.ProviderID,
 		Channel:     request.Channel,
 		Credentials: request.Credentials,
 		Active:      request.Active,
@@ -33,35 +31,31 @@ func (integration *IntegrationService) Create(ctx context.Context, request Creat
 
 	jsonBody, _ := json.Marshal(requestBody)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, Url.String(), bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
 
 	if err != nil {
 		return nil, err
 	}
 
-	httpResponse, err := integration.client.sendRequest(req, &response)
+	_, err = i.client.sendRequest(req, &response)
 	if err != nil {
 		return nil, err
-	}
-
-	if httpResponse.StatusCode != HTTPStatusCreated {
-		return nil, errors.Wrap(err, "Unable to create integration")
 	}
 
 	return &response, nil
 }
 
-func (integration *IntegrationService) GetAll(ctx context.Context) (*GetIntegrationsResponse, error) {
+func (i IntegrationService) GetAll(ctx context.Context) (*GetIntegrationsResponse, error) {
 	var response GetIntegrationsResponse
-	Url := integration.client.config.BackendURL.JoinPath("integrations")
+	URL := i.client.config.BackendURL.JoinPath("integrations")
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, Url.String(), http.NoBody)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
 
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = integration.client.sendRequest(req, &response)
+	_, err = i.client.sendRequest(req, &response)
 
 	if err != nil {
 		return nil, err
@@ -70,17 +64,17 @@ func (integration *IntegrationService) GetAll(ctx context.Context) (*GetIntegrat
 	return &response, nil
 }
 
-func (integration *IntegrationService) GetActive(ctx context.Context) (*GetIntegrationsResponse, error) {
+func (i IntegrationService) GetActive(ctx context.Context) (*GetIntegrationsResponse, error) {
 	var response GetIntegrationsResponse
-	Url := integration.client.config.BackendURL.JoinPath("integrations", "active")
+	URL := i.client.config.BackendURL.JoinPath("integrations", "active")
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, Url.String(), http.NoBody)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
 
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = integration.client.sendRequest(req, &response)
+	_, err = i.client.sendRequest(req, &response)
 
 	if err != nil {
 		return nil, err
@@ -89,9 +83,9 @@ func (integration *IntegrationService) GetActive(ctx context.Context) (*GetInteg
 	return &response, nil
 }
 
-func (integration *IntegrationService) Update(ctx context.Context, integrationId string, request UpdateIntegrationRequest) (*IntegrationResponse, error) {
+func (i IntegrationService) Update(ctx context.Context, integrationId string, request UpdateIntegrationRequest) (*IntegrationResponse, error) {
 	var response IntegrationResponse
-	Url := integration.client.config.BackendURL.JoinPath("integrations", integrationId)
+	URL := i.client.config.BackendURL.JoinPath("integrations", integrationId)
 
 	requestBody := UpdateIntegrationRequest{
 		Credentials: request.Credentials,
@@ -101,13 +95,13 @@ func (integration *IntegrationService) Update(ctx context.Context, integrationId
 
 	jsonBody, _ := json.Marshal(requestBody)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPut, Url.String(), bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, URL.String(), bytes.NewBuffer(jsonBody))
 
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = integration.client.sendRequest(req, &response)
+	_, err = i.client.sendRequest(req, &response)
 
 	if err != nil {
 		return nil, err
@@ -116,17 +110,17 @@ func (integration *IntegrationService) Update(ctx context.Context, integrationId
 	return &response, nil
 }
 
-func (integration *IntegrationService) Delete(ctx context.Context, integrationId string) (*IntegrationResponse, error) {
+func (i IntegrationService) Delete(ctx context.Context, integrationId string) (*IntegrationResponse, error) {
 	var response IntegrationResponse
-	Url := integration.client.config.BackendURL.JoinPath("integrations", integrationId)
+	URL := i.client.config.BackendURL.JoinPath("integrations", integrationId)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, Url.String(), http.NoBody)
+	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, URL.String(), http.NoBody)
 
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = integration.client.sendRequest(req, &response)
+	_, err = i.client.sendRequest(req, &response)
 
 	if err != nil {
 		return nil, err

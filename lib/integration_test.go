@@ -83,7 +83,7 @@ func IntegrationTestServer[T any](t *testing.T, options IntegrationServerOptions
 
 func TestCreateIntegration_Success(t *testing.T) {
 	createIntegrationRequest := lib.CreateIntegrationRequest{
-		ProviderId: "sendgrid",
+		ProviderID: "sendgrid",
 		Channel:    "email",
 		Credentials: lib.IntegrationCredentials{
 			ApiKey:    "api_key",

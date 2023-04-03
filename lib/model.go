@@ -135,21 +135,21 @@ type IntegrationCredentials struct {
 	Port             string                 `json:"port,omitempty"`
 	Secure           bool                   `json:"secure,omitempty"`
 	Region           string                 `json:"region,omitempty"`
-	AccountSid       string                 `json:"accountSid,omitempty"`
-	MessageProfileId string                 `json:"messageProfileId,omitempty"`
+	AccountSID       string                 `json:"accountSid,omitempty"`
+	MessageProfileID string                 `json:"messageProfileId,omitempty"`
 	Token            string                 `json:"token,omitempty"`
 	From             string                 `json:"from,omitempty"`
 	SenderName       string                 `json:"senderName,omitempty"`
 	ProjectName      string                 `json:"projectName,omitempty"`
-	ApplicationId    string                 `json:"applicationId,omitempty"`
-	ClientId         string                 `json:"clientId,omitempty"`
+	ApplicationID    string                 `json:"applicationId,omitempty"`
+	ClientID         string                 `json:"clientId,omitempty"`
 	RequireTls       bool                   `json:"requireTls,omitempty"`
 	IgnoreTls        bool                   `json:"ignoreTls,omitempty"`
 	TlsOptions       map[string]interface{} `json:"tlsOptions,omitempty"`
 }
 
 type CreateIntegrationRequest struct {
-	ProviderId  string                 `json:"providerId"`
+	ProviderID  string                 `json:"providerId"`
 	Channel     ChannelType            `json:"channel"`
 	Credentials IntegrationCredentials `json:"credentials,omitempty"`
 	Active      bool                   `json:"active"`
@@ -164,9 +164,9 @@ type UpdateIntegrationRequest struct {
 
 type Integration struct {
 	Id             string                 `json:"_id"`
-	EnvironmentId  string                 `json:"_environmentId"`
-	OrganizationId string                 `json:"_organizationId"`
-	ProviderId     string                 `json:"providerId"`
+	EnvironmentID  string                 `json:"_environmentId"`
+	OrganizationID string                 `json:"_organizationId"`
+	ProviderID     string                 `json:"providerId"`
 	Channel        ChannelType            `json:"channel"`
 	Credentials    IntegrationCredentials `json:"credentials"`
 	Active         bool                   `json:"active"`
