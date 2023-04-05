@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -109,16 +108,14 @@ func (s *SubscriberService) GetNotificationFeed(ctx context.Context, subscriberI
 
 	if opts != nil {
 		queryValues := URL.Query()
-		if opts.Page != nil {
-			queryValues.Add("page", fmt.Sprint(*opts.Page))
+
+		params, err := GenerateQueryParamsFromStruct(*opts)
+		if err != nil {
+			return nil, err
 		}
 
-		if opts.FeedIdentifier != nil {
-			queryValues.Add("feedIdentifier", *opts.FeedIdentifier)
-		}
-
-		if opts.Seen != nil {
-			queryValues.Add("seen", strconv.FormatBool(*opts.Seen))
+		for _, param := range params {
+			queryValues.Add(param.Key, param.Value)
 		}
 
 		URL.RawQuery = queryValues.Encode()

@@ -165,9 +165,9 @@ type SubscribersTopicRequest struct {
 }
 
 type SubscriberNotificationFeedOptions struct {
-	Page           *int
-	FeedIdentifier *string
-	Seen           *bool
+	Page           int    `queryKey:"page"`
+	FeedIdentifier string `queryKey:"feedIdentifier"`
+	Seen           bool   `queryKey:"seen"`
 }
 
 type SubscriberUnseenCountOptions struct {

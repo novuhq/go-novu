@@ -179,9 +179,9 @@ func TestSubscriberService_GetNotificationFeed_Success(t *testing.T) {
 	feedIdentifier := "feed_identifier"
 
 	opts := lib.SubscriberNotificationFeedOptions{
-		Page:           &page,
-		Seen:           &seen,
-		FeedIdentifier: &feedIdentifier,
+		Page:           page,
+		Seen:           seen,
+		FeedIdentifier: feedIdentifier,
 	}
 
 	httpServer := createTestServer(t, TestServerOptions[io.Reader, *lib.SubscriberNotificationFeedResponse]{
@@ -189,6 +189,7 @@ func TestSubscriberService_GetNotificationFeed_Success(t *testing.T) {
 		expectedSentMethod: http.MethodGet,
 		expectedSentBody:   http.NoBody,
 		responseStatusCode: http.StatusOK,
+		responseBody:       expectedResponse,
 	})
 
 	ctx := context.Background()
