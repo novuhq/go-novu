@@ -19,8 +19,8 @@ const (
 
 const (
 	EMAIL  ChannelType = "EMAIL"
-	SMS                = "SMS"
-	DIRECT             = "DIRECT"
+	SMS    ChannelType = "SMS"
+	DIRECT ChannelType = "DIRECT"
 )
 
 type Data struct {
@@ -91,6 +91,42 @@ type EventRequest struct {
 
 type SubscriberResponse struct {
 	Data interface{} `json:"data"`
+}
+
+type Template struct {
+	ID       string `json:"_id"`
+	Name     string `json:"name"`
+	Critical bool   `json:"critical"`
+}
+
+type Preference struct {
+	Enabled  bool    `json:"enabled"`
+	Channels Channel `json:"channels"`
+}
+
+type Channel struct {
+	Email bool `json:"email"`
+	Sms   bool `json:"sms"`
+	Chat  bool `json:"chat"`
+	InApp bool `json:"in_app"`
+	Push  bool `json:"push"`
+}
+
+type SubscriberPreferencesResponse struct {
+	Data []struct {
+		Template   Template   `json:"template"`
+		Preference Preference `json:"preference"`
+	} `json:"data"`
+}
+
+type UpdateSubscriberPreferencesChannel struct {
+	Type    ChannelType `json:"type"`
+	Enabled bool        `json:"enabled"`
+}
+
+type UpdateSubscriberPreferencesOptions struct {
+	Channel []UpdateSubscriberPreferencesChannel `json:"channel,omitempty"`
+	Enabled bool                                 `json:"enabled,omitempty"`
 }
 
 type ListTopicsResponse struct {
@@ -209,4 +245,62 @@ type CTA struct {
 			Type    string                 `json:"type"`
 		} `json:"result"`
 	}
+}
+type IntegrationCredentials struct {
+	ApiKey           string                 `json:"apiKey,omitempty"`
+	User             string                 `json:"user,omitempty"`
+	SecretKey        string                 `json:"secretKey,omitempty"`
+	Domain           string                 `json:"domain,omitempty"`
+	Password         string                 `json:"password,omitempty"`
+	Host             string                 `json:"host,omitempty"`
+	Port             string                 `json:"port,omitempty"`
+	Secure           bool                   `json:"secure,omitempty"`
+	Region           string                 `json:"region,omitempty"`
+	AccountSID       string                 `json:"accountSid,omitempty"`
+	MessageProfileID string                 `json:"messageProfileId,omitempty"`
+	Token            string                 `json:"token,omitempty"`
+	From             string                 `json:"from,omitempty"`
+	SenderName       string                 `json:"senderName,omitempty"`
+	ProjectName      string                 `json:"projectName,omitempty"`
+	ApplicationID    string                 `json:"applicationId,omitempty"`
+	ClientID         string                 `json:"clientId,omitempty"`
+	RequireTls       bool                   `json:"requireTls,omitempty"`
+	IgnoreTls        bool                   `json:"ignoreTls,omitempty"`
+	TlsOptions       map[string]interface{} `json:"tlsOptions,omitempty"`
+}
+
+type CreateIntegrationRequest struct {
+	ProviderID  string                 `json:"providerId"`
+	Channel     ChannelType            `json:"channel"`
+	Credentials IntegrationCredentials `json:"credentials,omitempty"`
+	Active      bool                   `json:"active"`
+	Check       bool                   `json:"check"`
+}
+
+type UpdateIntegrationRequest struct {
+	Credentials IntegrationCredentials `json:"credentials"`
+	Active      bool                   `json:"active"`
+	Check       bool                   `json:"check"`
+}
+
+type Integration struct {
+	Id             string                 `json:"_id"`
+	EnvironmentID  string                 `json:"_environmentId"`
+	OrganizationID string                 `json:"_organizationId"`
+	ProviderID     string                 `json:"providerId"`
+	Channel        ChannelType            `json:"channel"`
+	Credentials    IntegrationCredentials `json:"credentials"`
+	Active         bool                   `json:"active"`
+	Deleted        bool                   `json:"deleted"`
+	UpdatedAt      string                 `json:"updatedAt"`
+	DeletedAt      string                 `json:"deletedAt"`
+	DeletedBy      string                 `json:"deletedBy"`
+}
+
+type IntegrationResponse struct {
+	Data Integration `json:"data"`
+}
+
+type GetIntegrationsResponse struct {
+	Data []Integration `json:"data"`
 }

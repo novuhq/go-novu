@@ -1,0 +1,39 @@
+{
+    "data" : [
+        {
+            "_id": "6425cb064a2a919bc61b0365",
+            "_environmentId": "6425cb40d22507199a000003",
+            "_organizationId": "7425cb40d22507199a000009",
+            "providerId": "sendgrid",
+            "channel": "email",
+            "credentials": {
+                "apiKey": "api_key",
+                "secretKey": "secret_key"
+            },
+            "active": true,
+            "deleted": false,
+            "deletedAt": "",
+            "deletedBy": ""
+        },
+        {
+            "_id": "8347cb064a2a202bc61b0483",
+            "_environmentId": "6425cb40d22507199a000003",
+            "_organizationId": "7425cb40d22507199a000009",
+            "providerId": "nodemailer",
+            "channel": "email",
+            "credentials": {
+                "secure": "true",
+                "requireTls": true,
+                "tlsOptions": {
+                    "unrestrictedUser": true
+                },
+                "from": "test@tes.com",
+                "senderName": "Test"
+            },
+            "active": false,
+            "deleted": false,
+            "deletedAt": "",
+            "deletedBy": ""
+        }
+    ]
+}

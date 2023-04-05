@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -13,11 +14,14 @@ import (
 
 type ISubscribers interface {
 	Identify(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
+	Get(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
 	Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	GetNotificationFeed(ctx context.Context, subscriberID string, opts *SubscriberNotificationFeedOptions) (*SubscriberNotificationFeedResponse, error)
 	GetUnseenCount(ctx context.Context, subscriberID string, opts *SubscriberUnseenCountOptions) (*SubscriberUnseenCountResponse, error)
 	MarkMessageSeen(ctx context.Context, subscriberID string, opts SubscriberMarkMessageSeenOptions) (*SubscriberNotificationFeedResponse, error)
+	GetPreferences(ctx context.Context, subscriberID string) (*SubscriberPreferencesResponse, error)
+	UpdatePreferences(ctx context.Context, subscriberID string, templateId string, opts *UpdateSubscriberPreferencesOptions) (*SubscriberPreferencesResponse, error)
 }
 
 type SubscriberService service
@@ -34,6 +38,23 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 	jsonBody, _ := json.Marshal(reqBody)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return resp, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
+func (s *SubscriberService) Get(ctx context.Context, subscriberID string) (SubscriberResponse, error) {
+	var resp SubscriberResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
 	if err != nil {
 		return resp, err
 	}
@@ -107,6 +128,22 @@ func (s *SubscriberService) GetNotificationFeed(ctx context.Context, subscriberI
 	if err != nil {
 		return nil, err
 	}
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
+}
+
+func (s *SubscriberService) GetPreferences(ctx context.Context, subscriberID string) (*SubscriberPreferencesResponse, error) {
+	var resp SubscriberPreferencesResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "preferences")
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
+	if err != nil {
+		return &resp, err
+	}
 
 	_, err = s.client.sendRequest(req, &resp)
 	if err != nil {
@@ -131,6 +168,34 @@ func (s *SubscriberService) GetUnseenCount(ctx context.Context, subscriberID str
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
 	if err != nil {
 		return nil, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
+}
+
+func (s *SubscriberService) UpdatePreferences(ctx context.Context, subscriberID string, templateId string, opts *UpdateSubscriberPreferencesOptions) (*SubscriberPreferencesResponse, error) {
+	var resp SubscriberPreferencesResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "preferences", templateId)
+
+	var reqBody io.Reader = http.NoBody
+
+	if opts != nil {
+		jsonBody, err := json.Marshal(opts)
+		if err != nil {
+			return nil, err
+		}
+
+		reqBody = bytes.NewBuffer(jsonBody)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPatch, URL.String(), reqBody)
+	if err != nil {
+		return &resp, err
 	}
 
 	_, err = s.client.sendRequest(req, &resp)
