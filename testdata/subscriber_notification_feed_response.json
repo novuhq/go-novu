@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "cta": { "action": { "buttons": [] }, "type": "redirect" },
+      "_id": "63ef751b0cf910b8da36abfa",
+      "_templateId": "63ef53d0d9ff09b916ead6bb",
+      "_environmentId": "63e29e4f33a4f29919d35ff0",
+      "_messageTemplateId": "63ef543fd9ff09b916eaedaf",
+      "_notificationId": "63ef74fd5e79762aa933341d",
+      "_organizationId": "63e29e4f33a4f29919d35fea",
+      "_subscriberId": "63e3381e8c028c44fd5841b1",
+      "_jobId": "63ef74fd5e79762aa9333426",
+      "templateIdentifier": "updates",
+      "_feedId": null,
+      "channel": "in_app",
+      "content": "Hello wassup",
+      "deviceTokens": [],
+      "seen": true,
+      "read": true,
+      "status": "sent",
+      "transactionId": "3b1f1062-3a9e-4b9f-85e5-8a6592c9189c",
+      "payload": { "updateMessage": "Hello wassup" },
+      "deleted": false,
+      "createdAt": "2023-02-17T12:37:47.856Z",
+      "updatedAt": "2023-02-17T12:37:50.934Z",
+      "__v": 0,
+      "lastReadDate": "2023-02-17T12:37:50.934Z",
+      "lastSeenDate": "2023-02-17T12:37:50.934Z",
+      "subscriber": {
+        "_id": "63e3381e8c028c44fd5841b1",
+        "subscriberId": "63e3381d33a4f29919e6bb65",
+        "id": "63e3381e8c028c44fd5841b1"
+      },
+      "id": "63ef751b0cf910b8da36abfa"
+    }
+  ],
+  "totalCount": 1,
+  "pageSize": 10,
+  "page": 0
+}

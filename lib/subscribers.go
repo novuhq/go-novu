@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 
 	"github.com/pkg/errors"
 )
@@ -15,6 +16,9 @@ type ISubscribers interface {
 	Get(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
 	Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error)
+	GetNotificationFeed(ctx context.Context, subscriberID string, opts *SubscriberNotificationFeedOptions) (*SubscriberNotificationFeedResponse, error)
+	GetUnseenCount(ctx context.Context, subscriberID string, opts *SubscriberUnseenCountOptions) (*SubscriberUnseenCountResponse, error)
+	MarkMessageSeen(ctx context.Context, subscriberID string, opts SubscriberMarkMessageSeenOptions) (*SubscriberNotificationFeedResponse, error)
 	GetPreferences(ctx context.Context, subscriberID string) (*SubscriberPreferencesResponse, error)
 	UpdatePreferences(ctx context.Context, subscriberID string, templateId string, opts *UpdateSubscriberPreferencesOptions) (*SubscriberPreferencesResponse, error)
 }
@@ -98,6 +102,37 @@ func (s *SubscriberService) Delete(ctx context.Context, subscriberID string) (Su
 	return resp, nil
 }
 
+func (s *SubscriberService) GetNotificationFeed(ctx context.Context, subscriberID string, opts *SubscriberNotificationFeedOptions) (*SubscriberNotificationFeedResponse, error) {
+	var resp SubscriberNotificationFeedResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "notifications", "feed")
+
+	if opts != nil {
+		queryValues := URL.Query()
+
+		params, err := GenerateQueryParamsFromStruct(*opts)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, param := range params {
+			queryValues.Add(param.Key, param.Value)
+		}
+
+		URL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
+	if err != nil {
+		return nil, err
+	}
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
+}
+
 func (s *SubscriberService) GetPreferences(ctx context.Context, subscriberID string) (*SubscriberPreferencesResponse, error) {
 	var resp SubscriberPreferencesResponse
 	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "preferences")
@@ -109,7 +144,32 @@ func (s *SubscriberService) GetPreferences(ctx context.Context, subscriberID str
 
 	_, err = s.client.sendRequest(req, &resp)
 	if err != nil {
-		return &resp, err
+		return nil, err
+	}
+
+	return &resp, nil
+}
+
+func (s *SubscriberService) GetUnseenCount(ctx context.Context, subscriberID string, opts *SubscriberUnseenCountOptions) (*SubscriberUnseenCountResponse, error) {
+	var resp SubscriberUnseenCountResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "notifications", "unseen")
+
+	if opts != nil {
+		if opts.Seen != nil {
+			queryValues := URL.Query()
+			queryValues.Add("seen", strconv.FormatBool(*opts.Seen))
+			URL.RawQuery = queryValues.Encode()
+		}
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return nil, err
 	}
 
 	return &resp, nil
@@ -137,7 +197,29 @@ func (s *SubscriberService) UpdatePreferences(ctx context.Context, subscriberID 
 
 	_, err = s.client.sendRequest(req, &resp)
 	if err != nil {
-		return &resp, err
+		return nil, err
+	}
+
+	return &resp, nil
+}
+
+func (s *SubscriberService) MarkMessageSeen(ctx context.Context, subscriberID string, opts SubscriberMarkMessageSeenOptions) (*SubscriberNotificationFeedResponse, error) {
+	var resp SubscriberNotificationFeedResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "messages", "markAs")
+
+	jsonBody, err := json.Marshal(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return nil, err
 	}
 
 	return &resp, nil

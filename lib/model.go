@@ -1,6 +1,9 @@
 package lib
 
-import "io"
+import (
+	"io"
+	"time"
+)
 
 type ChannelType string
 type GeneralError error
@@ -161,6 +164,88 @@ type SubscribersTopicRequest struct {
 	Subscribers []string `json:"subscribers"`
 }
 
+type SubscriberNotificationFeedOptions struct {
+	Page           int    `queryKey:"page"`
+	FeedIdentifier string `queryKey:"feedIdentifier"`
+	Seen           bool   `queryKey:"seen"`
+}
+
+type SubscriberUnseenCountOptions struct {
+	Seen *bool `json:"seen"`
+}
+
+type SubscriberMarkMessageSeenOptions struct {
+	MessageID string `json:"messageId"`
+	Seen      bool   `json:"seen"`
+	Read      bool   `json:"read"`
+}
+
+type NotificationFeedData struct {
+	CTA              CTA       `json:"cta"`
+	Channel          string    `json:"channel"`
+	Content          string    `json:"content"`
+	CreatedAt        time.Time `json:"createdAt"`
+	Deleted          bool      `json:"deleted"`
+	DeviceTokens     []string  `json:"deviceTokens"`
+	DirectWebhookURL string    `json:"directWebhookUrl"`
+	EnvironmentID    string    `json:"_environmentId"`
+	ErrorID          string    `json:"errorId"`
+	ErrorText        string    `json:"errorText"`
+	FeedID           string    `json:"_feedId"`
+	ID               string    `json:"_id"`
+	JobID            string    `json:"_jobId"`
+	LastReadDate     time.Time `json:"lastReadDate"`
+	LastSeenDate     time.Time `json:"lastSeenDate"`
+	MessageTemplate  string    `json:"_messageTemplateId"`
+	NotificationID   string    `json:"_notificationId"`
+	OrganizationID   string    `json:"_organizationId"`
+	Payload          struct {
+		UpdateMessage string `json:"updateMessage"`
+	} `json:"payload"`
+	ProviderID string `json:"providerId"`
+	Read       bool   `json:"read"`
+	ResponseID string `json:"id"`
+	Seen       bool   `json:"seen"`
+	Status     string `json:"status"`
+	Subscriber struct {
+		ID           string `json:"_id"`
+		SubscriberID string `json:"subscriberId"`
+	} `json:"subscriber"`
+	SubscriberID       string    `json:"_subscriberId"`
+	TemplateID         string    `json:"_templateId"`
+	TemplateIdentifier string    `json:"templateIdentifier"`
+	TransactionID      string    `json:"transactionId"`
+	UpdatedAt          time.Time `json:"updatedAt"`
+}
+
+type SubscriberNotificationFeedResponse struct {
+	TotalCount int                    `json:"totalCount"`
+	Data       []NotificationFeedData `json:"data"`
+	PageSize   int                    `json:"pageSize"`
+	Page       int                    `json:"page"`
+}
+
+type SubscriberUnseenCountResponse struct {
+	Data struct {
+		Count int `json:"count"`
+	} `json:"data"`
+}
+
+type CTA struct {
+	Type   string `json:"type"`
+	Action struct {
+		Status  string `json:"status"`
+		Buttons struct {
+			Type          string `json:"type"`
+			Content       string `json:"content"`
+			ResultContent string `json:"resultContent"`
+		} `json:"buttons"`
+		Result struct {
+			Payload map[string]interface{} `json:"payload"`
+			Type    string                 `json:"type"`
+		} `json:"result"`
+	}
+}
 type IntegrationCredentials struct {
 	ApiKey           string                 `json:"apiKey,omitempty"`
 	User             string                 `json:"user,omitempty"`

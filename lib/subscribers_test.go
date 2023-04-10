@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -169,6 +170,36 @@ func TestSubscriberService_Delete_Success(t *testing.T) {
 	})
 }
 
+func TestSubscriberService_GetNotificationFeed_Success(t *testing.T) {
+	var expectedResponse *lib.SubscriberNotificationFeedResponse
+	fileToStruct(filepath.Join("../testdata", "subscriber_notification_feed_response.json"), &expectedResponse)
+
+	page := 1
+	seen := true
+	feedIdentifier := "feed_identifier"
+
+	opts := lib.SubscriberNotificationFeedOptions{
+		Page:           page,
+		Seen:           seen,
+		FeedIdentifier: feedIdentifier,
+	}
+
+	httpServer := createTestServer(t, TestServerOptions[io.Reader, *lib.SubscriberNotificationFeedResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/notifications/feed?feedIdentifier=%s&page=%s&seen=%s", subscriberID, feedIdentifier, strconv.Itoa(page), strconv.FormatBool(seen)),
+		expectedSentMethod: http.MethodGet,
+		expectedSentBody:   http.NoBody,
+		responseStatusCode: http.StatusOK,
+		responseBody:       expectedResponse,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	resp, err := c.SubscriberApi.GetNotificationFeed(ctx, subscriberID, &opts)
+
+	require.NoError(t, err)
+	require.Equal(t, resp, expectedResponse)
+}
+
 func TestSubscriberService_GetSubscriber_Success(t *testing.T) {
 	var expectedResponse lib.SubscriberResponse
 	fileToStruct(filepath.Join("../testdata", "subscriber_response.json"), &expectedResponse)
@@ -205,6 +236,57 @@ func TestSubscriberService_GetPreferences_Success(t *testing.T) {
 	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
 	resp, err := c.SubscriberApi.GetPreferences(ctx, subscriberID)
 
+	require.NoError(t, err)
+	require.Equal(t, resp, expectedResponse)
+}
+
+func TestSubscriberService_GetUnseenCount_Success(t *testing.T) {
+	var expectedResponse *lib.SubscriberUnseenCountResponse
+	fileToStruct(filepath.Join("../testdata", "subscriber_notification_feed_unseen.json"), &expectedResponse)
+
+	seen := false
+
+	opts := lib.SubscriberUnseenCountOptions{
+		Seen: &seen,
+	}
+
+	httpServer := createTestServer(t, TestServerOptions[io.Reader, *lib.SubscriberUnseenCountResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/notifications/unseen?seen=false", subscriberID),
+		expectedSentMethod: http.MethodGet,
+		expectedSentBody:   http.NoBody,
+		responseStatusCode: http.StatusOK,
+		responseBody:       expectedResponse,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	resp, err := c.SubscriberApi.GetUnseenCount(ctx, subscriberID, &opts)
+
+	require.NoError(t, err)
+	require.Equal(t, resp, expectedResponse)
+}
+
+func TestSubscriberService_MarkMessageSeen(t *testing.T) {
+	var expectedResponse *lib.SubscriberNotificationFeedResponse
+	fileToStruct(filepath.Join("../testdata", "subscriber_notification_feed_response.json"), &expectedResponse)
+
+	opts := lib.SubscriberMarkMessageSeenOptions{
+		MessageID: "message_id",
+		Seen:      true,
+		Read:      true,
+	}
+
+	httpServer := createTestServer(t, TestServerOptions[lib.SubscriberMarkMessageSeenOptions, *lib.SubscriberNotificationFeedResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/messages/markAs", subscriberID),
+		expectedSentMethod: http.MethodPost,
+		expectedSentBody:   opts,
+		responseStatusCode: http.StatusOK,
+		responseBody:       expectedResponse,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	resp, err := c.SubscriberApi.MarkMessageSeen(ctx, subscriberID, opts)
 	require.NoError(t, err)
 	require.Equal(t, resp, expectedResponse)
 }
