@@ -69,6 +69,9 @@ Check the `cmd` directory to see a sample implementation and test files to see s
 Class | Method                                                                           | HTTP request                            | Description
 ------------ |----------------------------------------------------------------------------------|-----------------------------------------| -------------
 *EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)   | **Post** /events/trigger                | Trigger
+*EventApi* | [**TriggerBulk**](https://docs.novu.co/api/trigger-event/)   | **Post** /v1/events/trigger/bulk               | Bulk trigger event
+*EventApi* | [**BroadcastToAll**](https://docs.novu.co/api/broadcast-event-to-all/)   | **Post** /v1/events/trigger/broadcast               | Broadcast event to all
+*EventApi* | [**CancelTrigger**](https://docs.novu.co/api/cancel-triggered-event/)   | **Delete** /v1/events/trigger/:transactionId                | Cancel triggered event
 *SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber/) | **Get** /subscribers/:subscriberId                 | Get a subscriber
 *SubscriberApi* | [**Identify**](https://docs.novu.co/platform/subscribers#creating-a-subscriber) | **Post** /subscribers                 | Create a subscriber
 *SubscriberApi* | [**Update**](https://docs.novu.co/platform/subscribers#updating-subscriber-data)     | **Put** /subscribers/:subscriberID    | Update subscriber data
