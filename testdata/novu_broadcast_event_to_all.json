@@ -1,0 +1,9 @@
+{
+  "payload": {
+    "name": "Hello World",
+    "organization": {
+      "logo": "https://happycorp.com/logo.png"
+    }
+  },
+  "transactionId": "7425cb40d22507199a000009"
+}

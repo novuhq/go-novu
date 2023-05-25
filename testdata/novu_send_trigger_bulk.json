@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "name": "event1",
+      "to": {
+        "subscriberId": "john@doemail.com",
+        "lastName":     "Doe",
+        "firstName":    "John",
+        "email":        "john@doemail.com"
+      },
+      "payload": {
+        "name": "Hello World"
+      }
+    },
+    {
+      "name": "event2",
+      "to": {
+        "subscriberId": "jack@google.com",
+        "lastName":     "Jones",
+        "firstName":    "Jack",
+        "email":        "jack@google.com"
+      },
+      "payload": {
+        "name": "Hello World"
+      }
+    }
+  ]
+}

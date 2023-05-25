@@ -304,3 +304,24 @@ type IntegrationResponse struct {
 type GetIntegrationsResponse struct {
 	Data []Integration `json:"data"`
 }
+
+type BulkTriggerOptions struct {
+	Name          interface{} `json:"name,omitempty"`
+	To            interface{} `json:"to,omitempty"`
+	Payload       interface{} `json:"payload,omitempty"`
+	Overrides     interface{} `json:"overrides,omitempty"`
+	TransactionId string      `json:"transactionId,omitempty"`
+	Actor         interface{} `json:"actor,omitempty"`
+}
+
+type BulkTriggerEvent struct {
+	Events []BulkTriggerOptions `json:"events"`
+}
+
+type BroadcastEventToAll struct {
+	Name          interface{} `json:"name,omitempty"`
+	Payload       interface{} `json:"payload,omitempty"`
+	Overrides     interface{} `json:"overrides,omitempty"`
+	TransactionId string      `json:"transactionId,omitempty"`
+	Actor         interface{} `json:"actor,omitempty"`
+}
