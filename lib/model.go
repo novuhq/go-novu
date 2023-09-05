@@ -325,10 +325,3 @@ type BroadcastEventToAll struct {
 	TransactionId string      `json:"transactionId,omitempty"`
 	Actor         interface{} `json:"actor,omitempty"`
 }
-
-type MxRecordConfiguredStatus struct {
-	MxRecordConfigured bool `json:"mxRecordConfigured"`
-}
-type InboundParserResponse struct {
-	Data MxRecordConfiguredStatus `json:"data"`
-}
