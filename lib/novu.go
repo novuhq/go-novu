@@ -32,6 +32,7 @@ type APIClient struct {
 	EventApi        *EventService
 	TopicsApi       *TopicService
 	IntegrationsApi *IntegrationService
+	InboundParser   *InboundParserService
 }
 
 type service struct {
