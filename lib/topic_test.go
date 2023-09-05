@@ -223,3 +223,22 @@ func TestRenameTopic_Success(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, resp, expectedResponse)
 }
+
+func TestDeleteTopic_Success(t *testing.T) {
+	key := "topicKey"
+	body := map[string]string{}
+
+	httpServer := createTestServer(t, TestServerOptions[map[string]string, map[string]string]{
+		expectedURLPath:    fmt.Sprintf("/v1/topics/%s", key),
+		expectedSentMethod: http.MethodDelete,
+		expectedSentBody:   body,
+		responseStatusCode: http.StatusNoContent,
+		responseBody:       body,
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	err := c.TopicsApi.Delete(ctx, key)
+
+	require.NoError(t, err)
+}

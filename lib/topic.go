@@ -16,6 +16,7 @@ type ITopic interface {
 	RemoveSubscribers(ctx context.Context, key string, subscribers []string) error
 	Get(ctx context.Context, key string) (*GetTopicResponse, error)
 	Rename(ctx context.Context, key string, name string) (*GetTopicResponse, error)
+	Delete(ctx context.Context, key string) error
 }
 
 type TopicService service
@@ -149,4 +150,21 @@ func (t *TopicService) Rename(ctx context.Context, key string, name string) (*Ge
 	}
 
 	return &resp, nil
+}
+
+func (t *TopicService) Delete(ctx context.Context, key string) error {
+	var resp interface{}
+	URL := t.client.config.BackendURL.JoinPath("topics", key)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, URL.String(), http.NoBody)
+	if err != nil {
+		return err
+	}
+
+	_, err = t.client.sendRequest(req, &resp)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
