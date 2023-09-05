@@ -81,11 +81,18 @@ Class | Method                                                                  
 *SubscriberApi* | [**Post**](https://docs.novu.co/api/mark-a-subscriber-feed-message-as-seen)     | **Post** /v1/subscribers/:subscriberId/messages/markAs | Mark a subscriber feed message as seen
 *SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber-preferences/)     | **Get** /subscribers/:subscriberId/preferences | Get subscriber preferences
 *SubscriberApi* | [**Patch**](https://docs.novu.co/api/update-subscriber-preference/)     | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference
+*TopicsApi* | [**Get**](https://docs.novu.co/api/filter-topics/) | **Get** /topics | Get a list of topics
+*TopicsApi* | [**Get**](https://docs.novu.co/api/get-topic/) | **Get** /topics/:topicKey | Get a topic by its topic key
+*TopicsApi* | [**Post**](https://docs.novu.co/api/topic-creation/) | **Post** /topics | Create a topic
+*TopicsApi* | [**Patch**](https://docs.novu.co/api/rename-a-topic/) | **Patch** /topics/:topicKey | Rename a topic
+*TopicsApi* | [**Delete**](https://docs.novu.co/api/delete-topic/) | **Delete** /topics/:topicKey | Delete a topic
+*TopicsApi* | [**Post**](https://docs.novu.co/api/subscribers-addition/) | **Post** /topics/:topicKey/subscribers | Add subscribers to a topic by key
+*TopicsApi* | [**Post**](https://docs.novu.co/api/subscribers-removal/) | **Post** /topics/:topicKey/subscribers/removal |Remove subscribers from a topic
 *IntegrationsApi* | [**Create**](https://docs.novu.co/platform/integrations)                         | **Post** /integrations                  | Create an integration
 *IntegrationsApi* | [**Update**](https://docs.novu.co/platform/integrations)                         | **Put** /integrations/:integrationId    | Update an integration
 *IntegrationsApi* | [**Delete**](https://docs.novu.co/platform/integrations)                         | **Delete** /integrations/:integrationId | Delete an integration
 *IntegrationsApi* | [**Get**](https://docs.novu.co/platform/integrations)                            | **Get** /integrations                   | Get all integrations
-*IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/intergations)                      | **Get** /integrations/active            | Get all active integrations
+*IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/integrations)                      | **Get** /integrations/active            | Get all active integrations
 
 ## Authorization (api-key)
 
@@ -103,7 +110,7 @@ As always, if you need additional assistance, join our Discord us a note [here](
 
 ## Contributors
 
-Name |   
+Name |
 ------------ |
 [Oyewole Samuel](https://github.com/samsoft00) |
 [Dima Grossman](https://github.com/scopsy) |
