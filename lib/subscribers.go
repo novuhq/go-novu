@@ -3,6 +3,7 @@ package lib
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -108,6 +109,23 @@ func (s *SubscriberService) GetNotificationFeed(ctx context.Context, subscriberI
 
 	if opts != nil {
 		queryValues := URL.Query()
+		if opts.Payload != nil {
+			var payloadOpts Base64Payload
+			payloadString, err := json.Marshal(opts.Payload)
+			if err != nil {
+				return nil, err
+			}
+			opts.Payload = nil
+
+			payloadOpts.Payload = base64.StdEncoding.EncodeToString(payloadString)
+			params, err := GenerateQueryParamsFromStruct(payloadOpts)
+			if err != nil {
+				return nil, err
+			}
+			for _, param := range params {
+				queryValues.Add(param.Key, param.Value)
+			}
+		}
 
 		params, err := GenerateQueryParamsFromStruct(*opts)
 		if err != nil {

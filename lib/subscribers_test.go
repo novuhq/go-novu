@@ -177,15 +177,19 @@ func TestSubscriberService_GetNotificationFeed_Success(t *testing.T) {
 	page := 1
 	seen := true
 	feedIdentifier := "feed_identifier"
+	payload := map[string]interface{}{
+		"name": "test",
+	}
 
 	opts := lib.SubscriberNotificationFeedOptions{
 		Page:           page,
 		Seen:           seen,
 		FeedIdentifier: feedIdentifier,
+		Payload:        payload,
 	}
 
 	httpServer := createTestServer(t, TestServerOptions[io.Reader, *lib.SubscriberNotificationFeedResponse]{
-		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/notifications/feed?feedIdentifier=%s&page=%s&seen=%s", subscriberID, feedIdentifier, strconv.Itoa(page), strconv.FormatBool(seen)),
+		expectedURLPath:    fmt.Sprintf("/v1/subscribers/%s/notifications/feed?feedIdentifier=%s&page=%s&payload=eyJuYW1lIjoidGVzdCJ9&seen=%s", subscriberID, feedIdentifier, strconv.Itoa(page), strconv.FormatBool(seen)),
 		expectedSentMethod: http.MethodGet,
 		expectedSentBody:   http.NoBody,
 		responseStatusCode: http.StatusOK,

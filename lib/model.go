@@ -165,9 +165,13 @@ type SubscribersTopicRequest struct {
 }
 
 type SubscriberNotificationFeedOptions struct {
-	Page           int    `queryKey:"page"`
-	FeedIdentifier string `queryKey:"feedIdentifier"`
-	Seen           bool   `queryKey:"seen"`
+	Page           int         `queryKey:"page"`
+	FeedIdentifier string      `queryKey:"feedIdentifier"`
+	Seen           bool        `queryKey:"seen"`
+	Payload        interface{} `queryKey:"payload"`
+}
+type Base64Payload struct {
+	Payload string `queryKey:"payload"`
 }
 
 type SubscriberUnseenCountOptions struct {
@@ -235,7 +239,7 @@ type CTA struct {
 	Type   string `json:"type"`
 	Action struct {
 		Status  string `json:"status"`
-		Buttons struct {
+		Buttons []struct {
 			Type          string `json:"type"`
 			Content       string `json:"content"`
 			ResultContent string `json:"resultContent"`
