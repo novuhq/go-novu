@@ -13,6 +13,7 @@ import (
 
 type ISubscribers interface {
 	Identify(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
+	CreateBulk(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error)
 	Get(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
 	Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error)
@@ -36,6 +37,26 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 
 	jsonBody, _ := json.Marshal(reqBody)
 
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return resp, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
+func (s *SubscriberService) CreateBulk(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error) {
+	var resp SubscriberBulkCreateResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", "bulk")
+	jsonBody, err := json.Marshal(subscribers)
+	if err != nil {
+		return resp, err
+	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return resp, err

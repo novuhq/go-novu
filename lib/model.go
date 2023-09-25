@@ -53,12 +53,18 @@ type TriggerTopicRecipientsTypeSingle struct {
 }
 
 type SubscriberPayload struct {
-	FirstName string                 `json:"first_name,omitempty"`
-	LastName  string                 `json:"last_name,omitempty"`
-	Email     string                 `json:"email,omitempty"`
-	Phone     string                 `json:"phone,omitempty"`
-	Avatar    string                 `json:"avatar,omitempty"`
-	Data      map[string]interface{} `json:"data,omitempty"`
+	FirstName    string                 `json:"firstName,omitempty"`
+	LastName     string                 `json:"lastName,omitempty"`
+	Email        string                 `json:"email,omitempty"`
+	Phone        string                 `json:"phone,omitempty"`
+	Avatar       string                 `json:"avatar,omitempty"`
+	Locale       string                 `json:"locale,omitempty"`
+	Data         map[string]interface{} `json:"data,omitempty"`
+	SubscriberId string                 `json:"subscriberId"`
+}
+
+type SubscriberBulkPayload struct {
+	Subscribers []SubscriberPayload `json:"subscribers"`
 }
 
 type TriggerRecipientsType interface {
@@ -91,6 +97,18 @@ type EventRequest struct {
 
 type SubscriberResponse struct {
 	Data interface{} `json:"data"`
+}
+
+type SubscriberBulkCreateResponse struct {
+	Data struct {
+		Updated []struct {
+			SubscriberId string `json:"subscriberId"`
+		} `json:"updated"`
+		Created []struct {
+			SubscriberId string `json:"subscriberId"`
+		} `json:"created"`
+		Failed []interface{} `json:"failed"`
+	} `json:"data"`
 }
 
 type Template struct {
