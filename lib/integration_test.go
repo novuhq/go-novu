@@ -169,6 +169,28 @@ func TestGetActiveIntegration_Success(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestGetWebhookSupportStatusIntegration_Success(t *testing.T) {
+	providerId := "sendgrid"
+	response := true
+	httpServer := IntegrationTestServer(t, IntegrationServerOptions[interface{}]{
+		ExpectedRequest: IntegrationRequestDetails[interface{}]{
+			Url:    fmt.Sprintf("/v1/integrations/webhook/provider/%s/status", providerId),
+			Method: http.MethodGet,
+		},
+		ExpectedResponse: IntegrationResponseDetails{
+			StatusCode: http.StatusOK,
+			Body:       response,
+		},
+	})
+
+	ctx := context.Background()
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+
+	res, err := novuClient.IntegrationsApi.GetWebhookSupportStatus(ctx, providerId)
+	assert.Equal(t, response, res)
+	require.NoError(t, err)
+}
+
 func TestUpdateIntegration_Success(t *testing.T) {
 	const integrationId = "integrationId"
 
