@@ -132,6 +132,61 @@ func TestSubscriberService_Update_Success(t *testing.T) {
 	})
 }
 
+func TestSubscriberService_Update_Credentials_Success(t *testing.T) {
+	var (
+		updateSubscriberCreds lib.SubscriberCredentialPayload
+		receivedBody          lib.SubscriberCredentialPayload
+		expectedRequest       lib.SubscriberCredentialPayload
+		expectedResponse      lib.SubscriberResponse
+	)
+
+	subscriberService := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		if err := json.NewDecoder(req.Body).Decode(&receivedBody); err != nil {
+			log.Printf("error in unmarshalling %+v", err)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		t.Run("Header must contain ApiKey", func(t *testing.T) {
+			authKey := req.Header.Get("Authorization")
+			assert.True(t, strings.Contains(authKey, novuApiKey))
+			assert.True(t, strings.HasPrefix(authKey, "ApiKey"))
+		})
+
+		t.Run("URL and request method is as expected", func(t *testing.T) {
+			expectedURL := "/v1/subscribers/" + subscriberID + "/credentials"
+			assert.Equal(t, http.MethodPut, req.Method)
+			assert.Equal(t, expectedURL, req.RequestURI)
+		})
+
+		t.Run("Request is as expected", func(t *testing.T) {
+			fileToStruct(filepath.Join("../testdata", "update_subscriber_credentials.json"), &expectedRequest)
+			assert.Equal(t, expectedRequest, receivedBody)
+		})
+
+		var resp lib.SubscriberResponse
+		fileToStruct(filepath.Join("../testdata", "subscriber_response.json"), &resp)
+
+		w.WriteHeader(http.StatusOK)
+		bb, _ := json.Marshal(resp)
+		w.Write(bb)
+	}))
+
+	ctx := context.Background()
+	fileToStruct(filepath.Join("../testdata", "update_subscriber_credentials.json"), &updateSubscriberCreds)
+
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
+
+	resp, err := c.SubscriberApi.UpdateCredentials(ctx, subscriberID, updateSubscriberCreds)
+	require.Nil(t, err)
+	assert.NotNil(t, resp)
+
+	t.Run("Response is as expected", func(t *testing.T) {
+		fileToStruct(filepath.Join("../testdata", "subscriber_response.json"), &expectedResponse)
+		assert.Equal(t, expectedResponse, resp)
+	})
+}
+
 func TestSubscriberService_Delete_Success(t *testing.T) {
 	var expectedResponse lib.SubscriberResponse
 

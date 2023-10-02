@@ -15,6 +15,7 @@ type ISubscribers interface {
 	Identify(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
 	Get(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
+	UpdateCredentials(ctx context.Context, subscriberID string, payload SubscriberCredentialPayload) (SubscriberResponse, error)
 	Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	GetNotificationFeed(ctx context.Context, subscriberID string, opts *SubscriberNotificationFeedOptions) (*SubscriberNotificationFeedResponse, error)
 	GetUnseenCount(ctx context.Context, subscriberID string, opts *SubscriberUnseenCountOptions) (*SubscriberUnseenCountResponse, error)
@@ -69,6 +70,25 @@ func (s *SubscriberService) Get(ctx context.Context, subscriberID string) (Subsc
 func (s *SubscriberService) Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error) {
 	var resp SubscriberResponse
 	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID)
+
+	jsonBody, _ := json.Marshal(data)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, URL.String(), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return resp, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
+func (s *SubscriberService) UpdateCredentials(ctx context.Context, subscriberID string, data SubscriberCredentialPayload) (SubscriberResponse, error) {
+	var resp SubscriberResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "credentials")
 
 	jsonBody, _ := json.Marshal(data)
 

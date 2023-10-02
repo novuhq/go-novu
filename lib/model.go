@@ -7,6 +7,7 @@ import (
 
 type ChannelType string
 type GeneralError error
+type ProviderIdType string
 
 const Version = "v1"
 
@@ -21,6 +22,18 @@ const (
 	EMAIL  ChannelType = "EMAIL"
 	SMS    ChannelType = "SMS"
 	DIRECT ChannelType = "DIRECT"
+)
+
+const (
+	slack       ProviderIdType = "slack"
+	discord     ProviderIdType = "discord"
+	msteams     ProviderIdType = "msteams"
+	mattermost  ProviderIdType = "mattermost"
+	fcm         ProviderIdType = "fcm"
+	apns        ProviderIdType = "apns"
+	expo        ProviderIdType = "expo"
+	oneSignal   ProviderIdType = "one-signal"
+	pushWebhook ProviderIdType = "push-webhook"
 )
 
 type Data struct {
@@ -229,6 +242,18 @@ type SubscriberUnseenCountResponse struct {
 	Data struct {
 		Count int `json:"count"`
 	} `json:"data"`
+}
+
+type Credentials struct {
+	WebhookUrl   string   `json:"webhookUrl,omitempty"`
+	Channel      string   `json:"channel,omitempty"`
+	DeviceTokens []string `json:"deviceTokens,omitempty"`
+}
+
+type SubscriberCredentialPayload struct {
+	Credentials           Credentials    `json:"credentials"`
+	IntegrationIdentifier string         `json:"integrationIdentifier,omitempty"`
+	ProviderId            ProviderIdType `json:"providerId"`
 }
 
 type CTA struct {
