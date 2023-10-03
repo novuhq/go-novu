@@ -87,6 +87,9 @@ Class | Method                                                                  
 *IntegrationsApi* | [**Get**](https://docs.novu.co/platform/integrations)                            | **Get** /integrations                   | Get all integrations
 *IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/intergations)                      | **Get** /integrations/active            | Get all active integrations
 
+*InboundParserApi* | [**Get**](https://docs.novu.co/platform/inbound-parse-webhook/)                      | **Get** /inbound-parse/mx/status            | Validate the mx record setup for the inbound parse functionality 
+
+## Authorization (api-key)
 ## Authorization (api-key)
 
 - **Type**: API key
