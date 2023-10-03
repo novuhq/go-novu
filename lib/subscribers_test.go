@@ -124,7 +124,7 @@ func TestSubscriberService_BulkCreate_Success(t *testing.T) {
 
 	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
 
-	resp, err := c.SubscriberApi.CreateBulk(ctx, subscriberBulkPayload)
+	resp, err := c.SubscriberApi.BulkCreate(ctx, subscriberBulkPayload)
 	require.Nil(t, err)
 	assert.NotNil(t, resp)
 

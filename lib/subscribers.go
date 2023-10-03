@@ -13,7 +13,7 @@ import (
 
 type ISubscribers interface {
 	Identify(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
-	CreateBulk(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error)
+	BulkCreate(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error)
 	Get(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
 	Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error)
@@ -50,7 +50,7 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 	return resp, nil
 }
 
-func (s *SubscriberService) CreateBulk(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error) {
+func (s *SubscriberService) BulkCreate(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error) {
 	var resp SubscriberBulkCreateResponse
 	URL := s.client.config.BackendURL.JoinPath("subscribers", "bulk")
 	jsonBody, err := json.Marshal(subscribers)
