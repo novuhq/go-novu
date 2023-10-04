@@ -102,11 +102,6 @@ type ExecutionsQueryParams struct {
 	SubscriberId   string
 }
 
-// QueryBuilder gives us an interface to pass as arg to our API methods.
-// See messages.go for an example of implementing this interface
-type QueryBuilder interface {
-	BuildQuery() string
-}
 type EventResponse struct {
 	JsonResponse
 }
@@ -118,6 +113,20 @@ type EventRequest struct {
 	Overrides     interface{} `json:"overrides,omitempty"`
 	TransactionId string      `json:"transactionId,omitempty"`
 	Actor         interface{} `json:"actor,omitempty"`
+}
+
+type MessagesQueryParams struct {
+	Channel       string
+	SubscriberId  string
+	TransactionId []string
+	Page          int
+	Limit         int
+}
+
+// QueryBuilder gives us an interface to pass as arg to our API methods.
+// See messages.go for an example of implementing this interface
+type QueryBuilder interface {
+	BuildQuery() string
 }
 
 type SubscriberResponse struct {
