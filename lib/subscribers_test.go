@@ -77,6 +77,63 @@ func TestSubscriberService_Identify_Success(t *testing.T) {
 	})
 }
 
+func TestSubscriberService_BulkCreate_Success(t *testing.T) {
+	var (
+		subscriberBulkPayload lib.SubscriberBulkPayload
+		receivedBody          lib.SubscriberBulkPayload
+		expectedRequest       lib.SubscriberBulkPayload
+		expectedResponse      lib.SubscriberBulkCreateResponse
+	)
+
+	subscriberService := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		if err := json.NewDecoder(req.Body).Decode(&receivedBody); err != nil {
+			log.Printf("error in unmarshalling %+v", err)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		t.Run("Header must contain ApiKey", func(t *testing.T) {
+			authKey := req.Header.Get("Authorization")
+			assert.True(t, strings.Contains(authKey, novuApiKey))
+			assert.True(t, strings.HasPrefix(authKey, "ApiKey"))
+		})
+
+		t.Run("URL and request method is as expected", func(t *testing.T) {
+			expectedURL := "/v1/subscribers/bulk"
+			assert.Equal(t, http.MethodPost, req.Method)
+			assert.Equal(t, expectedURL, req.RequestURI)
+		})
+
+		t.Run("Request is as expected", func(t *testing.T) {
+			fileToStruct(filepath.Join("../testdata", "subscriber_bulk.json"), &expectedRequest)
+			assert.Equal(t, expectedRequest, receivedBody)
+		})
+
+		var resp lib.SubscriberResponse
+		fileToStruct(filepath.Join("../testdata", "subscriber_bulk_response.json"), &resp)
+
+		w.WriteHeader(http.StatusOK)
+		bb, _ := json.Marshal(resp)
+		w.Write(bb)
+	}))
+
+	defer subscriberService.Close()
+
+	ctx := context.Background()
+	fileToStruct(filepath.Join("../testdata", "subscriber_bulk.json"), &subscriberBulkPayload)
+
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(subscriberService.URL)})
+
+	resp, err := c.SubscriberApi.BulkCreate(ctx, subscriberBulkPayload)
+	require.Nil(t, err)
+	assert.NotNil(t, resp)
+
+	t.Run("Response is as expected", func(t *testing.T) {
+		fileToStruct(filepath.Join("../testdata", "subscriber_bulk_response.json"), &expectedResponse)
+		assert.Equal(t, expectedResponse, resp)
+	})
+}
+
 func TestSubscriberService_Update_Success(t *testing.T) {
 	var (
 		updateSubscriber lib.SubscriberPayload
