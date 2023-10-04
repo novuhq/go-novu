@@ -1,0 +1,31 @@
+{
+  "_id": "string",
+  "name": "string",
+  "description": "string",
+  "active": true,
+  "draft": true,
+  "preferenceSettings": {},
+  "critical": true,
+  "tags": [
+    "string"
+  ],
+  "steps": [
+    {}
+  ],
+  "_organizationId": "string",
+  "_creatorId": "string",
+  "_environmentId": "string",
+  "triggers": [
+    {}
+  ],
+  "_notificationGroupId": "string",
+  "_parentId": "string",
+  "deleted": true,
+  "deletedAt": "string",
+  "deletedBy": "string",
+  "createdAt": "string",
+  "updatedAt": "string",
+  "notificationGroup": {},
+  "isBlueprint": true,
+  "blueprintId": "string"
+}
