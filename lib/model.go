@@ -94,9 +94,21 @@ type IAttachmentOptions struct {
 	Name     string        `json:"name,omitempty"`
 	Channels []ChannelType `json:"channels,omitempty"`
 }
-
-type EventResponse struct {
+type JsonResponse struct {
 	Data interface{} `json:"data"`
+}
+type ExecutionsQueryParams struct {
+	NotificationId string
+	SubscriberId   string
+}
+
+// QueryBuilder gives us an interface to pass as arg to our API methods.
+// See messages.go for an example of implementing this interface
+type QueryBuilder interface {
+	BuildQuery() string
+}
+type EventResponse struct {
+	JsonResponse
 }
 
 type EventRequest struct {
@@ -109,7 +121,7 @@ type EventRequest struct {
 }
 
 type SubscriberResponse struct {
-	Data interface{} `json:"data"`
+	JsonResponse
 }
 
 type SubscriberBulkCreateResponse struct {
