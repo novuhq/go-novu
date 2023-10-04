@@ -12,6 +12,7 @@ import (
 type ITopic interface {
 	Create(ctx context.Context, key string, name string) error
 	List(ctx context.Context, options *ListTopicsOptions) (*ListTopicsResponse, error)
+	CheckTopicSubscriber(ctx context.Context, key string, externalsubscriber string) (*CheckTopicSubscriberResponse, error)
 	AddSubscribers(ctx context.Context, key string, subscribers []string) error
 	RemoveSubscribers(ctx context.Context, key string, subscribers []string) error
 	Get(ctx context.Context, key string) (*GetTopicResponse, error)
@@ -59,6 +60,23 @@ func (t *TopicService) List(ctx context.Context, options *ListTopicsOptions) (*L
 	queryParams, _ := json.Marshal(options)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), bytes.NewBuffer(queryParams))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = t.client.sendRequest(req, &resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
+}
+
+func (t *TopicService) CheckTopicSubscriber(ctx context.Context, key string, externalsubscriber string) (*CheckTopicSubscriberResponse, error) {
+	var resp CheckTopicSubscriberResponse
+	URL := t.client.config.BackendURL.JoinPath("topics", key, "subscribers", externalsubscriber)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), bytes.NewBuffer([]byte{}))
 	if err != nil {
 		return nil, err
 	}

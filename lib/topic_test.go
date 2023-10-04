@@ -91,6 +91,26 @@ func TestCreateTopic_Success(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestCheckTopicSubscriber_Success(t *testing.T) {
+	topicKey := "topicKey"
+	subscriber := "subId"
+	httpServer := createTestServer(t, TestServerOptions[map[string]string, lib.CheckTopicSubscriberResponse]{
+		expectedURLPath:    fmt.Sprintf("/v1/topics/%s/subscribers/%s", topicKey, subscriber),
+		expectedSentMethod: http.MethodGet,
+		expectedSentBody:   map[string]string{},
+		responseStatusCode: http.StatusOK,
+		responseBody:       lib.CheckTopicSubscriberResponse{
+			ExternalSubscriberId: subscriber,
+		},
+	})
+
+	ctx := context.Background()
+	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+	_, err := c.TopicsApi.CheckTopicSubscriber(ctx, topicKey, subscriber)
+
+	require.NoError(t, err)
+}
+
 func TestAddSubscription_Success(t *testing.T) {
 	subs := []string{"subId"}
 	key := "topicKey"

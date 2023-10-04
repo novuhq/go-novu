@@ -158,6 +158,15 @@ type GetTopicResponse struct {
 	Subscribers    []string `json:"subscribers"`
 }
 
+type CheckTopicSubscriberResponse struct {
+	OrganizationId       string `json:"_organizationId"`
+	EnvironmentId        string `json:"_environmentId"`
+	SubsriberId          string `json:"_subscriberId"`
+	Id                   string `json:"_topicId"`
+	Key                  string `json:"topicKey"`
+	ExternalSubscriberId string `json:"externalSubscriberId"`
+}
+
 type ListTopicsOptions struct {
 	Page     *int    `json:"page,omitempty"`
 	PageSize *int    `json:"pageSize,omitempty"`
