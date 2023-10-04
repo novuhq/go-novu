@@ -31,6 +31,7 @@ type APIClient struct {
 	SubscriberApi    *SubscriberService
 	EventApi         *EventService
 	ExecutionsApi    *ExecutionsService
+	MessagesApi      *MessagesService
 	TopicsApi        *TopicService
 	IntegrationsApi  *IntegrationService
 	InboundParserApi *InboundParserService
@@ -55,6 +56,7 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	c.EventApi = (*EventService)(&c.common)
 	c.ExecutionsApi = (*ExecutionsService)(&c.common)
 	c.SubscriberApi = (*SubscriberService)(&c.common)
+	c.MessagesApi = (*MessagesService)(&c.common)
 	c.TopicsApi = (*TopicService)(&c.common)
 	c.IntegrationsApi = (*IntegrationService)(&c.common)
 	c.InboundParserApi = (*InboundParserService)(&c.common)
