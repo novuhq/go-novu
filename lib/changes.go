@@ -9,13 +9,6 @@ import (
 	"strconv"
 )
 
-type IChanges interface {
-	ApplyChange(ctx context.Context, changeId string) (ChangesApplyResponse, error)
-	ApplyBulkChanges(ctx context.Context, payload ChangesBulkApplyPayload) (JsonResponse, error)
-	GetChanges(ctx context.Context, query ChangesGetQuery) (ChangesGetResponse, error)
-	GetChangesCount(ctx context.Context) (ChangesCountResponse, error)
-}
-
 type ChangesService service
 
 func (c *ChangesService) GetChangesCount(ctx context.Context) (ChangesCountResponse, error) {

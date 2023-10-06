@@ -183,7 +183,6 @@ func TestChangesService_Apply_Success(t *testing.T) {
 		})
 
 		var resp lib.ChangesApplyResponse
-		// fileToStruct(filepath.Join("../testdata", "changes_apply_response.json"), &resp)
 		payloadStringToStruct(applyResponse, &resp)
 
 		w.WriteHeader(http.StatusOK)
@@ -251,7 +250,6 @@ func TestChangesService_BulkApply_Success(t *testing.T) {
 	defer ChangesService.Close()
 
 	ctx := context.Background()
-	// fileToStruct(filepath.Join("../testdata", "changes_apply_payload.json"), &changesBulkApplyPayload)
 	payloadStringToStruct(bulkApplyPayload, &changesBulkApplyPayload)
 
 	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(ChangesService.URL)})
