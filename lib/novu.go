@@ -36,6 +36,7 @@ type APIClient struct {
 	TopicsApi        *TopicService
 	IntegrationsApi  *IntegrationService
 	InboundParserApi *InboundParserService
+	WorkflowGroupApi *WorkflowGroupService
 }
 
 type service struct {
@@ -62,6 +63,7 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	c.TopicsApi = (*TopicService)(&c.common)
 	c.IntegrationsApi = (*IntegrationService)(&c.common)
 	c.InboundParserApi = (*InboundParserService)(&c.common)
+	c.WorkflowGroupApi = (*WorkflowGroupService)(&c.common)
 	return c
 }
 
@@ -117,7 +119,6 @@ func (c APIClient) decode(v interface{}, b []byte) (err error) {
 }
 
 func buildBackendURL(cfg *Config) *url.URL {
-
 	if cfg.BackendURL == nil {
 		rawURL := fmt.Sprintf("%s/%s", NovuURL, NovuVersion)
 		return MustParseURL(rawURL)
