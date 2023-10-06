@@ -5,11 +5,6 @@ import (
 	"net/http"
 )
 
-type IBlueprints interface {
-	GetGroupByCategory(ctx context.Context) (BlueprintGroupByCategoryResponse, error)
-	GetByTemplateID(ctx context.Context, templateID string) (BlueprintByTemplateIdResponse, error)
-}
-
 type BlueprintService service
 
 func (b *BlueprintService) GetGroupByCategory(ctx context.Context) (BlueprintGroupByCategoryResponse, error) {
@@ -45,5 +40,3 @@ func (b *BlueprintService) GetByTemplateID(ctx context.Context, templateID strin
 
 	return resp, nil
 }
-
-var _ IBlueprints = &BlueprintService{}
