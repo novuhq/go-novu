@@ -408,3 +408,36 @@ type MxRecordConfiguredStatus struct {
 type InboundParserResponse struct {
 	Data MxRecordConfiguredStatus `json:"data"`
 }
+
+type CreateWorkflowGroupRequest struct {
+	Name string
+}
+
+type UpdateWorkflowGroupRequest struct {
+	Name string `json:"name"`
+}
+
+type ListWorkflowGroupsResponse struct {
+	Data []WorkflowGroup `json:"data"`
+}
+
+type WorkflowGroup struct {
+	Id             string `json:"_id"`
+	Name           string `json:"name"`
+	EnvironmentId  string `json:"_environmentId"`
+	OrganizationId string `json:"_organizationId"`
+	ParentId       string `json:"_parentId"`
+}
+
+type GetWorkflowResponse struct {
+	Data WorkflowGroup `json:"data"`
+}
+
+type DeleteWorkflowGroupResponse struct {
+	Data DeleteWorkflowGroup `json:"data"`
+}
+
+type DeleteWorkflowGroup struct {
+	Acknowledged bool   `json:"acknowledged"`
+	Status       string `json:"status"`
+}
