@@ -120,7 +120,7 @@ func TestChangesService_Get_Success(t *testing.T) {
 	var (
 		expectedResponse lib.ChangesGetResponse
 	)
-	promoted := "yes"
+	promoted := "false"
 	page := 1
 	limit := 10
 
@@ -132,9 +132,9 @@ func TestChangesService_Get_Success(t *testing.T) {
 		})
 
 		t.Run("URL and request method is as expected", func(t *testing.T) {
-			expectedURL := fmt.Sprintf("/v1/changes?promoted=%s&page=%s&limit=%s", promoted, strconv.Itoa(page), strconv.Itoa(limit))
+			expectedURL := fmt.Sprintf("/v1/changes?limit=%s&page=%s&promoted=%s", strconv.Itoa(limit), strconv.Itoa(page), promoted)
 			assert.Equal(t, http.MethodGet, req.Method)
-			assert.Equal(t, expectedURL, req.RequestURI)
+			assert.Equal(t, expectedURL, req.URL.String())
 		})
 
 		var resp lib.ChangesGetResponse
@@ -151,7 +151,7 @@ func TestChangesService_Get_Success(t *testing.T) {
 	ctx := context.Background()
 
 	c := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(ChangesService.URL)})
-	q := lib.ChangesGetQuery{Page: 1, Limit: 10, Promoted: "yes"}
+	q := lib.ChangesGetQuery{Page: 1, Limit: 10, Promoted: "false"}
 	resp, err := c.ChangesApi.GetChanges(ctx, q)
 	require.Nil(t, err)
 	assert.NotNil(t, resp)
