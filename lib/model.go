@@ -439,3 +439,10 @@ type BlueprintGroupByCategoryResponse struct {
 	General []interface{} `json:"general,omitempty"`
 	Popular interface{} `json:"popular,omitempty"`
 }
+
+
+type UpdateTenantRequest struct {
+	Name 	 string `json:"name"`
+	Data 	 map[string]interface{} `json:"data"`
+	Identifier string `json:"identifier"`
+}

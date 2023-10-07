@@ -37,6 +37,7 @@ type APIClient struct {
 	TopicsApi        *TopicService
 	IntegrationsApi  *IntegrationService
 	InboundParserApi *InboundParserService
+	TenantApi	     *TenantService
 }
 
 type service struct {
@@ -64,6 +65,7 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	c.IntegrationsApi = (*IntegrationService)(&c.common)
 	c.InboundParserApi = (*InboundParserService)(&c.common)
 	c.BlueprintApi = (*BlueprintService)(&c.common)
+	c.TenantApi = (*TenantService)(&c.common)
 	return c
 }
 
