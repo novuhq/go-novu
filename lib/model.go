@@ -382,6 +382,30 @@ type GetIntegrationsResponse struct {
 	Data []Integration `json:"data"`
 }
 
+type IntegrationChannelLimitResponse struct {
+	Data struct {
+		Limit int `json:"limit"`
+		Count int `json:"count"`
+	} `json:"data"`
+}
+
+type SetIntegrationAsPrimaryResponse struct {
+	Data struct {
+		ID             string                 `json:"_id"`
+		EnvironmentID  string                 `json:"_environmentId"`
+		OrganizationID string                 `json:"_organizationId"`
+		Name           string                 `json:"name"`
+		Identifier     string                 `json:"identifier"`
+		ProviderID     string                 `json:"providerId"`
+		Channel        string                 `json:"channel"`
+		Credentials    IntegrationCredentials `json:"credentials"`
+		Active         bool                   `json:"active"`
+		Deleted        bool                   `json:"deleted"`
+		DeletedAt      string                 `json:"deletedAt"`
+		DeletedBy      string                 `json:"deletedBy"`
+		Primary        bool                   `json:"primary"`
+	} `json:"data"`
+}
 type BulkTriggerOptions struct {
 	Name          interface{} `json:"name,omitempty"`
 	To            interface{} `json:"to,omitempty"`
@@ -437,5 +461,5 @@ type BlueprintByTemplateIdResponse struct {
 
 type BlueprintGroupByCategoryResponse struct {
 	General []interface{} `json:"general,omitempty"`
-	Popular interface{} `json:"popular,omitempty"`
+	Popular interface{}   `json:"popular,omitempty"`
 }
