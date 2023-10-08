@@ -453,3 +453,33 @@ type LayoutsResponse struct {
 	PageSize   int              `json:"pageSize"`
 	Page       int              `json:"page"`
 }
+type BlueprintByTemplateIdResponse struct {
+	Id                  string        `json:"_id,omitempty"`
+	Name                string        `json:"name,omitempty"`
+	Description         string        `json:"description,omitempty"`
+	Active              bool          `json:"active,omitempty"`
+	Draft               bool          `json:"draft,omitempty"`
+	PreferenceSettings  interface{}   `json:"preferenceSettings,omitempty"`
+	Critical            bool          `json:"critical,omitempty"`
+	Tags                []string      `json:"tags,omitempty"`
+	Steps               []interface{} `json:"steps,omitempty"`
+	OrganizationID      string        `json:"_organizationId,omitempty"`
+	CreatorID           string        `json:"_creatorId,omitempty"`
+	EnvironmentID       string        `json:"_environmentId,omitempty"`
+	Triggers            []interface{} `json:"triggers,omitempty"`
+	NotificationGroupID string        `json:"_notificationGroupId,omitempty"`
+	ParentId            string        `json:"_parentId,omitempty"`
+	Deleted             bool          `json:"deleted,omitempty"`
+	DeletedAt           string        `json:"deletedAt,omitempty"`
+	DeletedBy           string        `json:"deletedBy,omitempty"`
+	CreatedAt           string        `json:"createdAt,omitempty"`
+	UpdatedAt           string        `json:"updatedAt,omitempty"`
+	NotificationGroup   interface{}   `json:"notificationGroup,omitempty"`
+	IsBlueprint         bool          `json:"isBlueprint,omitempty"`
+	BlueprintID         string        `json:"blueprintId,omitempty"`
+}
+
+type BlueprintGroupByCategoryResponse struct {
+	General []interface{} `json:"general,omitempty"`
+	Popular interface{}   `json:"popular,omitempty"`
+}
