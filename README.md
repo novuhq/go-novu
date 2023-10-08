@@ -68,26 +68,25 @@ Check the `cmd` directory to see a sample implementation and test files to see s
 
 Class | Method                                                                           | HTTP request                            | Description
 ------------ |----------------------------------------------------------------------------------|-----------------------------------------| -------------
-*EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)   | **Post** /events/trigger                | Trigger
-*EventApi* | [**TriggerBulk**](https://docs.novu.co/api/trigger-event/)   | **Post** /v1/events/trigger/bulk               | Bulk trigger event
-*EventApi* | [**BroadcastToAll**](https://docs.novu.co/api/broadcast-event-to-all/)   | **Post** /v1/events/trigger/broadcast               | Broadcast event to all
-*EventApi* | [**CancelTrigger**](https://docs.novu.co/api/cancel-triggered-event/)   | **Delete** /v1/events/trigger/:transactionId                | Cancel triggered event
-*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber/) | **Get** /subscribers/:subscriberId                 | Get a subscriber
-*SubscriberApi* | [**Identify**](https://docs.novu.co/platform/subscribers#creating-a-subscriber) | **Post** /subscribers                 | Create a subscriber
-*SubscriberApi* | [**Update**](https://docs.novu.co/platform/subscribers#updating-subscriber-data)     | **Put** /subscribers/:subscriberID    | Update subscriber data
-*SubscriberApi* | [**Delete**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)     | **Delete** /subscribers/:subscriberID | Removing a subscriber
-*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-a-notification-feed-for-a-particular-subscriber)     | **Get** /subscribers/:subscriberId/notifications/feed | Get a notification feed for a particular subscriber
-*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-the-unseen-notification-count-for-subscribers-feed)     | **Get** /subscribers/:subscriberId/notifications/feed | Get the unseen notification count for subscribers feed
-*SubscriberApi* | [**Post**](https://docs.novu.co/api/mark-a-subscriber-feed-message-as-seen)     | **Post** /v1/subscribers/:subscriberId/messages/markAs | Mark a subscriber feed message as seen
-*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber-preferences/)     | **Get** /subscribers/:subscriberId/preferences | Get subscriber preferences
-*SubscriberApi* | [**Patch**](https://docs.novu.co/api/update-subscriber-preference/)     | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference
-*IntegrationsApi* | [**Create**](https://docs.novu.co/platform/integrations)                         | **Post** /integrations                  | Create an integration
-*IntegrationsApi* | [**Update**](https://docs.novu.co/platform/integrations)                         | **Put** /integrations/:integrationId    | Update an integration
-*IntegrationsApi* | [**Delete**](https://docs.novu.co/platform/integrations)                         | **Delete** /integrations/:integrationId | Delete an integration
-*IntegrationsApi* | [**Get**](https://docs.novu.co/platform/integrations)                            | **Get** /integrations                   | Get all integrations
-*IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/intergations)                      | **Get** /integrations/active            | Get all active integrations
-
-*InboundParserApi* | [**Get**](https://docs.novu.co/platform/inbound-parse-webhook/)                      | **Get** /inbound-parse/mx/status            | Validate the mx record setup for the inbound parse functionality 
+*EventApi* | [**Trigger**](https://docs.novu.co/api-reference/events/trigger-event)   | **Post** /events/trigger                | Trigger
+*EventApi* | [**TriggerBulk**](https://docs.novu.co/api-reference/events/bulk-trigger-event)   | **Post** /v1/events/trigger/bulk               | Bulk trigger event
+*EventApi* | [**BroadcastToAll**](https://docs.novu.co/api-reference/events/broadcast-event-to-all)   | **Post** /v1/events/trigger/broadcast               | Broadcast event to all
+*EventApi* | [**CancelTrigger**](https://docs.novu.co/api-reference/events/cancel-triggered-event))   | **Delete** /v1/events/trigger/:transactionId                | Cancel triggered event
+*SubscriberApi* | [**Get**](https://docs.novu.co/api-reference/subscribers/get-subscriber)) | **Get** /subscribers/:subscriberId                 | Get a subscriber
+*SubscriberApi* | [**Identify**](https://docs.novu.co/api-reference/subscribers/create-subscriber) | **Post** /subscribers                 | Create a subscriber
+*SubscriberApi* | [**Update**](https://docs.novu.co/api-reference/subscribers/update-subscriber)     | **Put** /subscribers/:subscriberID    | Update subscriber data
+*SubscriberApi* | [**Delete**](https://docs.novu.co/api-reference/subscribers/delete-subscriber)     | **Delete** /subscribers/:subscriberID | Removing a subscriber
+*SubscriberApi* | [**Get**](https://docs.novu.co/api-reference/subscribers/get-in-app-notification-feed-for-a-particular-subscriber)     | **Get** /subscribers/:subscriberId/notifications/feed | Get a notification feed for a particular subscriber
+*SubscriberApi* | [**Get**](https://docs.novu.co/api-reference/subscribers/get-the-unseen-in-app-notifications-count-for-subscribers-feed)     | **Get** /subscribers/:subscriberId/notifications/feed | Get the unseen notification count for subscribers feed
+*SubscriberApi* | [**Post**](https://docs.novu.co/api-reference/subscribers/mark-a-subscriber-feed-message-as-seen)     | **Post** /v1/subscribers/:subscriberId/messages/markAs | Mark a subscriber feed message as seen
+*SubscriberApi* | [**Get**](https://docs.novu.co/api-reference/subscribers/get-subscriber-preferences)     | **Get** /subscribers/:subscriberId/preferences | Get subscriber preferences
+*SubscriberApi* | [**Patch**](https://docs.novu.co/api-reference/subscribers/update-subscriber-preference)     | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference
+*IntegrationsApi* | [**Create**](https://docs.novu.co/api-reference/integrations/create-integration)                         | **Post** /integrations                  | Create an integration
+*IntegrationsApi* | [**Update**](https://docs.novu.co/api-reference/integrations/update-integration)                         | **Put** /integrations/:integrationId    | Update an integration
+*IntegrationsApi* | [**Delete**](https://docs.novu.co/api-reference/integrations/delete-integration)                         | **Delete** /integrations/:integrationId | Delete an integration
+*IntegrationsApi* | [**Get**](https://docs.novu.co/api-reference/integrations/get-integrations)                           | **Get** /integrations                   | Get all integrations
+*IntegrationsApi* | [**GetActive**](https://docs.novu.co/api-reference/integrations/get-active-integrations)                      | **Get** /integrations/active            | Get all active integrations
+*InboundParserApi* | [**Get**](https://docs.novu.co/api-reference/inbound-parse/validate-the-mx-record-setup-for-the-inbound-parse-functionality)                      | **Get** /inbound-parse/mx/status            | Validate the mx record setup for the inbound parse functionality 
 
 ## Authorization (api-key)
 ## Authorization (api-key)
