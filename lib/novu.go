@@ -4,11 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
+	"github.com/hashicorp/go-retryablehttp"
 	"github.com/pkg/errors"
 )
 
@@ -17,9 +21,17 @@ const (
 	NovuVersion = "v1"
 )
 
+type RetryConfigType struct {
+	InitialDelay time.Duration // inital delay
+	WaitMin      time.Duration // Minimum time to wait
+	WaitMax      time.Duration // Maximum time to wait
+	RetryMax     int           // Maximum number of retries
+}
+
 type Config struct {
-	BackendURL *url.URL
-	HttpClient *http.Client
+	BackendURL  *url.URL
+	HttpClient  *http.Client
+	RetryConfig *RetryConfigType
 }
 
 type APIClient struct {
@@ -47,7 +59,37 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	cfg.BackendURL = buildBackendURL(cfg)
 
 	if cfg.HttpClient == nil {
-		cfg.HttpClient = &http.Client{Timeout: 20 * time.Second}
+		retyableClient := retryablehttp.NewClient()
+		if cfg.RetryConfig != nil {
+			retyableClient.RetryWaitMin = cfg.RetryConfig.WaitMin
+			retyableClient.RetryWaitMax = cfg.RetryConfig.WaitMax
+			retyableClient.RetryMax = cfg.RetryConfig.RetryMax
+			retyableClient.Backoff = func(min, max time.Duration, attemptNum int, resp *http.Response) time.Duration {
+				if resp != nil {
+					if resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode == http.StatusServiceUnavailable {
+						if s, ok := resp.Header["Retry-After"]; ok {
+							if sleep, err := strconv.ParseInt(s[0], 10, 64); err == nil {
+								return time.Second * time.Duration(sleep)
+							}
+						}
+					}
+				}
+				if attemptNum == 0 {
+					return cfg.RetryConfig.InitialDelay //wait for InitialDelay on 1st retry
+				}
+				mult := math.Pow(2, float64(attemptNum)) * float64(min)
+				sleep := time.Duration(mult)
+				//float64(sleep) != mult is to make sure there is no conversion error
+				//if there is a conversion error, number is huge and we set the sleep to max
+				if float64(sleep) != mult || sleep > max {
+					sleep = max
+				}
+				return sleep
+			}
+		} else {
+			retyableClient.RetryMax = 0 //by default no retry
+		}
+		cfg.HttpClient = retyableClient.StandardClient()
 	}
 
 	c := &APIClient{apiKey: apiKey}
@@ -70,6 +112,7 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 func (c APIClient) sendRequest(req *http.Request, resp interface{}) (*http.Response, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("ApiKey %s", c.apiKey))
+	req.Header.Set("Idempotency-Key", uuid.New().String())
 
 	res, err := c.config.HttpClient.Do(req)
 	if err != nil {
