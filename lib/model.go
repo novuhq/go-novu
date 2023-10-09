@@ -477,3 +477,10 @@ type ChangesBulkApplyPayload struct {
 type ChangesApplyResponse struct {
 	Data []ChangesGetResponseData `json:"data,omitempty"`
 }
+
+
+type UpdateTenantRequest struct {
+	Name 	 string `json:"name"`
+	Data 	 map[string]interface{} `json:"data"`
+	Identifier string `json:"identifier"`
+}
