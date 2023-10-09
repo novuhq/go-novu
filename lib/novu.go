@@ -41,6 +41,7 @@ type APIClient struct {
 
 	// Api Service
 	BlueprintApi     *BlueprintService
+	ChangesApi       *ChangesService
 	SubscriberApi    *SubscriberService
 	EventApi         *EventService
 	ExecutionsApi    *ExecutionsService
@@ -97,6 +98,7 @@ func NewAPIClient(apiKey string, cfg *Config) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.ChangesApi = (*ChangesService)(&c.common)
 	c.EventApi = (*EventService)(&c.common)
 	c.ExecutionsApi = (*ExecutionsService)(&c.common)
 	c.FeedsApi = (*FeedsService)(&c.common)
