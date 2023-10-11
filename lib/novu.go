@@ -51,7 +51,7 @@ type APIClient struct {
 	IntegrationsApi  *IntegrationService
 	InboundParserApi *InboundParserService
 	LayoutApi        *LayoutService
-	TenantApi	     *TenantService
+	TenantApi	       *TenantService
 }
 
 type service struct {
