@@ -409,6 +409,50 @@ type InboundParserResponse struct {
 	Data MxRecordConfiguredStatus `json:"data"`
 }
 
+type CreateLayoutRequest struct {
+	Name        string        `json:"name"`
+	Identifier  string        `json:"identifier"`
+	Description string        `json:"description"`
+	Content     string        `json:"content"`
+	Variables   []interface{} `json:"variables,omitempty"`
+	IsDefault   bool          `json:"isDefault,omitempty"`
+}
+
+type CreateLayoutResponse struct {
+	Data struct {
+		Id string `json:"_id"`
+	} `json:"data"`
+}
+type LayoutRequestOptions struct {
+	Page     *int    `json:"page,omitempty"`
+	PageSize *int    `json:"pageSize,omitempty"`
+	Key      *string `json:"key,omitempty"`
+	OrderBy  *int    `json:"orderBy,omitempty"`
+}
+type LayoutResponse struct {
+	Id             string        `json:"_id"`
+	OrganizationId string        `json:"_organizationId"`
+	EnvironmentId  string        `json:"_environmentId"`
+	CreatorId      string        `json:"_creatorId"`
+	Name           string        `json:"name"`
+	Identifier     string        `json:"identifier"`
+	Description    string        `json:"description"`
+	Channel        string        `json:"channel"`
+	Content        string        `json:"content"`
+	ContentType    string        `json:"contentType"`
+	Variables      []interface{} `json:"variables"`
+	IsDefault      bool          `json:"isDefault"`
+	IsDeleted      bool          `json:"isDeleted"`
+	CreatedAt      string        `json:"createdAt"`
+	UpdatedAt      string        `json:"updatedAt"`
+	ParentId       string        `json:"_parentId"`
+}
+type LayoutsResponse struct {
+	TotalCount int              `json:"totalCount"`
+	Data       []LayoutResponse `json:"data"`
+	PageSize   int              `json:"pageSize"`
+	Page       int              `json:"page"`
+}
 type BlueprintByTemplateIdResponse struct {
 	Id                  string        `json:"_id,omitempty"`
 	Name                string        `json:"name,omitempty"`
