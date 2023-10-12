@@ -463,3 +463,48 @@ type BlueprintGroupByCategoryResponse struct {
 	General []interface{} `json:"general,omitempty"`
 	Popular interface{}   `json:"popular,omitempty"`
 }
+
+type ChangesGetQuery struct {
+	Page     int    `json:"page,omitempty"`
+	Limit    int    `json:"limit,omitempty"`
+	Promoted string `json:"promoted,omitempty"`
+}
+
+type ChangesGetResponseData struct {
+	Id             string      `json:"_id,omitempty"`
+	CreatorId      string      `json:"_creatorId,omitempty"`
+	EnvironmentId  string      `json:"_environmentId,omitempty"`
+	OrganizationId string      `json:"_organizationId,omitempty"`
+	EntityId       string      `json:"_entityId,omitempty"`
+	Enabled        bool        `json:"enabled,omitempty"`
+	Type           string      `json:"type,omitempty"`
+	Change         interface{} `json:"change,omitempty"`
+	CreatedAt      string      `json:"createdAt,omitempty"`
+	ParentId       string      `json:"_parentId,omitempty"`
+}
+
+type ChangesGetResponse struct {
+	TotalCount int                      `json:"totalCount,omitempty"`
+	Data       []ChangesGetResponseData `json:"data"`
+	PageSize   int                      `json:"pageSize,omitempty"`
+	Page       int                      `json:"page,omitempty"`
+}
+
+type ChangesCountResponse struct {
+	Data int `json:"data"`
+}
+
+type ChangesBulkApplyPayload struct {
+	ChangeIds []string `json:"changeIds"`
+}
+
+type ChangesApplyResponse struct {
+	Data []ChangesGetResponseData `json:"data,omitempty"`
+}
+
+
+type UpdateTenantRequest struct {
+	Name 	 string `json:"name"`
+	Data 	 map[string]interface{} `json:"data"`
+	Identifier string `json:"identifier"`
+}
