@@ -1,0 +1,43 @@
+{
+	"data": {
+		"_id": "string",
+		"_environmentId": "string",
+		"_organizationId": "string",
+		"name": "string",
+		"identifier": "string",
+		"providerId": "string",
+		"channel": "in_app",
+		"credentials": {
+			"apiKey": "string",
+			"user": "string",
+			"secretKey": "string",
+			"domain": "string",
+			"password": "string",
+			"host": "string",
+			"port": "string",
+			"secure": true,
+			"region": "string",
+			"accountSid": "string",
+			"messageProfileId": "string",
+			"token": "string",
+			"from": "string",
+			"senderName": "string",
+			"projectName": "string",
+			"applicationId": "string",
+			"clientId": "string",
+			"requireTls": true,
+			"ignoreTls": true,
+			"baseUrl": "string",
+			"webhookUrl": "string",
+			"redirectUrl": "string",
+			"hmac": true,
+			"serviceAccount": "string",
+			"ipPoolName": "string"
+		},
+		"active": true,
+		"deleted": true,
+		"deletedAt": "string",
+		"deletedBy": "string",
+		"primary": true
+	}
+}
