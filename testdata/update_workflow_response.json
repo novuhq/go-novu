@@ -1,0 +1,91 @@
+{
+    "data": {
+      "_id": "string",
+      "name": "string",
+      "description": "string",
+      "active": true,
+      "draft": true,
+      "preferenceSettings": {
+        "email": true,
+        "sms": true,
+        "in_app": true,
+        "chat": true,
+        "push": true
+      },
+      "critical": true,
+      "tags": [
+        "string"
+      ],
+      "steps": [
+        {
+          "_id": "string",
+          "uuid": "string",
+          "name": "string",
+          "_templateId": "string",
+          "active": true,
+          "shouldStopOnFail": true,
+          "template": {},
+          "filters": [
+            {
+              "isNegated": true,
+              "type": "BOOLEAN",
+              "value": "AND",
+              "children": [
+                {
+                  "field": "string",
+                  "value": "string",
+                  "operator": "LARGER",
+                  "on": "subscriber"
+                }
+              ]
+            }
+          ],
+          "_parentId": {},
+          "metadata": {
+            "amount": 0,
+            "unit": "seconds",
+            "digestKey": "string",
+            "type": "regular",
+            "backoff": true,
+            "backoffAmount": 0,
+            "backoffUnit": "seconds",
+            "updateMode": true
+          },
+          "replyCallback": {}
+        }
+      ],
+      "_organizationId": "string",
+      "_creatorId": "string",
+      "_environmentId": "string",
+      "triggers": [
+        {
+          "type": "string",
+          "identifier": "string",
+          "variables": [
+            {
+              "name": "string"
+            }
+          ],
+          "subscriberVariables": [
+            {
+              "name": "string"
+            }
+          ]
+        }
+      ],
+      "_notificationGroupId": "string",
+      "_parentId": "string",
+      "deleted": true,
+      "deletedAt": "string",
+      "deletedBy": "string",
+      "notificationGroup": {
+        "_id": "string",
+        "name": "string",
+        "_environmentId": "string",
+        "_organizationId": "string",
+        "_parentId": "string"
+      },
+      "data": {},
+      "workflowIntegrationStatus": {}
+    }
+  }

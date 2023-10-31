@@ -546,9 +546,50 @@ type ChangesApplyResponse struct {
 	Data []ChangesGetResponseData `json:"data,omitempty"`
 }
 
-
 type UpdateTenantRequest struct {
-	Name 	 string `json:"name"`
-	Data 	 map[string]interface{} `json:"data"`
-	Identifier string `json:"identifier"`
+	Name       string                 `json:"name"`
+	Data       map[string]interface{} `json:"data"`
+	Identifier string                 `json:"identifier"`
+}
+
+type WorkflowGetRequestOptions struct {
+	Page  int `json:"page,omitempty"`
+	Limit int `json:"limit,omitempty"`
+}
+
+type WorkflowData struct {
+	Id                        string        `json:"_id,omitempty"`
+	Name                      string        `json:"name"`
+	Description               string        `json:"description"`
+	Active                    bool          `json:"active,omitempty"`
+	Draft                     bool          `json:"draft,omitempty"`
+	PreferenceSettings        Channel       `json:"preferenceSettings"`
+	Critical                  bool          `json:"critical"`
+	Tags                      []string      `json:"tags"`
+	Steps                     []interface{} `json:"steps"`
+	OrganizationId            string        `json:"_organizationId,omitempty"`
+	CreatorId                 string        `json:"_creatorId,omitempty"`
+	EnvironmentId             string        `json:"_environmentId,omitempty"`
+	Triggers                  []interface{} `json:"triggers,omitempty"`
+	NotificationGroupID       string        `json:"_notificationGroupId,omitempty"`
+	NotificationGroupId       string        `json:"notificationGroupId,omitempty"`
+	ParentId                  string        `json:"_parentId,omitempty"`
+	Deleted                   bool          `json:"deleted,omitempty"`
+	DeletedAt                 string        `json:"deletedAt,omitempty"`
+	DeletedBy                 string        `json:"deletedBy,omitempty"`
+	NotificationGroup         interface{}   `json:"notificationGroup,omitempty"`
+	Data                      interface{}   `json:"data,omitempty"`
+	WorkflowIntegrationStatus interface{}   `json:"workflowIntegrationStatus,omitempty"`
+	BlueprintId               string        `json:"blueprintId,omitempty"`
+}
+type WorkflowGetResponse struct {
+	Data WorkflowData `json:"data"`
+}
+
+type WorkflowDeleteResponse struct {
+	Data bool `json:"data"`
+}
+
+type WorkflowUpdateStatus struct {
+	Active bool `json:"active"`
 }
