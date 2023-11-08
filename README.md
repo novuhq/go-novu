@@ -96,8 +96,6 @@ _InboundParserApi_ | [**Get**](https://docs.novu.co/platform/inbound-parse-webho
 
 ## Authorization (api-key)
 
-## Authorization (api-key)
-
 - **Type**: API key
 - **API key parameter name**: ApiKey
 - **Location**: HTTP header
