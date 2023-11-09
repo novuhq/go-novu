@@ -106,7 +106,7 @@ Be sure to visit the Novu official [documentation website](https://docs.novu.co/
 
 If you find a bug, please post the issue on [Github](https://github.com/novuhq/go-novu/issues).
 
-As always, if you need additional assistance, join our Discord us a note [here](https://discord.gg/TT6TttXjRe).
+As always, if you need additional assistance, join our Discord us a note [here](https://discord.gg/novu).
 
 ## Contributors
 
