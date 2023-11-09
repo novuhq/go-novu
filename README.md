@@ -100,6 +100,8 @@ _InboundParserApi_ | [**Get**](https://docs.novu.co/platform/inbound-parse-webho
 - **API key parameter name**: ApiKey
 - **Location**: HTTP header
 
+### For more information about these methods and their parameters, see the [API documentation](https://docs.novu.co/api-reference/overview).  
+
 ## Support and Feedback
 
 Be sure to visit the Novu official [documentation website](https://docs.novu.co/docs) for additional information about our API.
