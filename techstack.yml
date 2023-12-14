@@ -1,11 +1,11 @@
 repo_name: novuhq/go-novu
-report_id: 906cf754f0629b0fe0a5e9d58f7019cd
+report_id: '09dd112665e7afa1290ea49cc2de3954'
 repo_type: Public
-timestamp: '2023-11-09T15:12:31+00:00'
-requested_by: sumitsaurabh927
+timestamp: '2023-12-14T09:32:28+00:00'
+requested_by: unicodeveloper
 provider: github
 branch: master
-detected_tools_count: 4
+detected_tools_count: 10
 tools:
 - name: Golang
   description: An open source programming language that makes it easy to build simple,
@@ -51,3 +51,89 @@ tools:
   detection_source: go.mod
   last_updated_by: Oyewole S. Abayomi
   last_updated_on: 2022-06-27 07:13:12.000000000 Z
+- name: errors
+  description: Simple error handling primitives
+  package_url: https://pkg.go.dev/github.com/pkg/errors
+  version: 0.9.1
+  license: BSD-2-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/novuhq/go-novu/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Oyewole S. Abayomi
+  last_updated_on: 2022-06-27 07:13:12.000000000 Z
+- name: go-cleanhttp
+  description: 'Cleanhttp Functions for accessing "clean" Go http.Client values The
+    Go standard library contains a default called '
+  package_url: https://pkg.go.dev/github.com/hashicorp/go-cleanhttp
+  version: 0.5.2
+  license: MPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/novuhq/go-novu/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Mahendra
+  last_updated_on: 2023-10-07 23:45:32.000000000 Z
+- name: go-difflib
+  description: Partial port of Python difflib package to Go
+  package_url: https://pkg.go.dev/github.com/pmezard/go-difflib
+  version: 1.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/novuhq/go-novu/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Oyewole S. Abayomi
+  last_updated_on: 2022-06-27 07:13:12.000000000 Z
+- name: go-retryablehttp
+  description: Retryable HTTP client in Go
+  package_url: https://pkg.go.dev/github.com/hashicorp/go-retryablehttp
+  version: 0.7.4
+  license: MPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/novuhq/go-novu/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Mahendra
+  last_updated_on: 2023-10-07 23:45:32.000000000 Z
+- name: go-spew
+  description: Implements a deep pretty printer for Go data structures to aid in debugging
+  package_url: https://pkg.go.dev/github.com/davecgh/go-spew
+  version: 1.1.0
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/novuhq/go-novu/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Oyewole S. Abayomi
+  last_updated_on: 2022-06-27 07:13:12.000000000 Z
+- name: google/uuid
+  description: 'Go package for UUIDs based on RFC 4122 and DCE 1.1: Authentication
+    and Security Services'
+  package_url: https://pkg.go.dev/github.com/google/uuid
+  version: 1.3.1
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/novuhq/go-novu/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Mahendra
+  last_updated_on: 2023-10-07 23:45:32.000000000 Z
