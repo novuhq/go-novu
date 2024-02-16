@@ -382,6 +382,30 @@ type GetIntegrationsResponse struct {
 	Data []Integration `json:"data"`
 }
 
+type IntegrationChannelLimitResponse struct {
+	Data struct {
+		Limit int `json:"limit"`
+		Count int `json:"count"`
+	} `json:"data"`
+}
+
+type SetIntegrationAsPrimaryResponse struct {
+	Data struct {
+		ID             string                 `json:"_id"`
+		EnvironmentID  string                 `json:"_environmentId"`
+		OrganizationID string                 `json:"_organizationId"`
+		Name           string                 `json:"name"`
+		Identifier     string                 `json:"identifier"`
+		ProviderID     string                 `json:"providerId"`
+		Channel        string                 `json:"channel"`
+		Credentials    IntegrationCredentials `json:"credentials"`
+		Active         bool                   `json:"active"`
+		Deleted        bool                   `json:"deleted"`
+		DeletedAt      string                 `json:"deletedAt"`
+		DeletedBy      string                 `json:"deletedBy"`
+		Primary        bool                   `json:"primary"`
+	} `json:"data"`
+}
 type BulkTriggerOptions struct {
 	Name          interface{} `json:"name,omitempty"`
 	To            interface{} `json:"to,omitempty"`
@@ -409,6 +433,50 @@ type InboundParserResponse struct {
 	Data MxRecordConfiguredStatus `json:"data"`
 }
 
+type CreateLayoutRequest struct {
+	Name        string        `json:"name"`
+	Identifier  string        `json:"identifier"`
+	Description string        `json:"description"`
+	Content     string        `json:"content"`
+	Variables   []interface{} `json:"variables,omitempty"`
+	IsDefault   bool          `json:"isDefault,omitempty"`
+}
+
+type CreateLayoutResponse struct {
+	Data struct {
+		Id string `json:"_id"`
+	} `json:"data"`
+}
+type LayoutRequestOptions struct {
+	Page     *int    `json:"page,omitempty"`
+	PageSize *int    `json:"pageSize,omitempty"`
+	Key      *string `json:"key,omitempty"`
+	OrderBy  *int    `json:"orderBy,omitempty"`
+}
+type LayoutResponse struct {
+	Id             string        `json:"_id"`
+	OrganizationId string        `json:"_organizationId"`
+	EnvironmentId  string        `json:"_environmentId"`
+	CreatorId      string        `json:"_creatorId"`
+	Name           string        `json:"name"`
+	Identifier     string        `json:"identifier"`
+	Description    string        `json:"description"`
+	Channel        string        `json:"channel"`
+	Content        string        `json:"content"`
+	ContentType    string        `json:"contentType"`
+	Variables      []interface{} `json:"variables"`
+	IsDefault      bool          `json:"isDefault"`
+	IsDeleted      bool          `json:"isDeleted"`
+	CreatedAt      string        `json:"createdAt"`
+	UpdatedAt      string        `json:"updatedAt"`
+	ParentId       string        `json:"_parentId"`
+}
+type LayoutsResponse struct {
+	TotalCount int              `json:"totalCount"`
+	Data       []LayoutResponse `json:"data"`
+	PageSize   int              `json:"pageSize"`
+	Page       int              `json:"page"`
+}
 type BlueprintByTemplateIdResponse struct {
 	Id                  string        `json:"_id,omitempty"`
 	Name                string        `json:"name,omitempty"`
@@ -437,5 +505,50 @@ type BlueprintByTemplateIdResponse struct {
 
 type BlueprintGroupByCategoryResponse struct {
 	General []interface{} `json:"general,omitempty"`
-	Popular interface{} `json:"popular,omitempty"`
+	Popular interface{}   `json:"popular,omitempty"`
+}
+
+type ChangesGetQuery struct {
+	Page     int    `json:"page,omitempty"`
+	Limit    int    `json:"limit,omitempty"`
+	Promoted string `json:"promoted,omitempty"`
+}
+
+type ChangesGetResponseData struct {
+	Id             string      `json:"_id,omitempty"`
+	CreatorId      string      `json:"_creatorId,omitempty"`
+	EnvironmentId  string      `json:"_environmentId,omitempty"`
+	OrganizationId string      `json:"_organizationId,omitempty"`
+	EntityId       string      `json:"_entityId,omitempty"`
+	Enabled        bool        `json:"enabled,omitempty"`
+	Type           string      `json:"type,omitempty"`
+	Change         interface{} `json:"change,omitempty"`
+	CreatedAt      string      `json:"createdAt,omitempty"`
+	ParentId       string      `json:"_parentId,omitempty"`
+}
+
+type ChangesGetResponse struct {
+	TotalCount int                      `json:"totalCount,omitempty"`
+	Data       []ChangesGetResponseData `json:"data"`
+	PageSize   int                      `json:"pageSize,omitempty"`
+	Page       int                      `json:"page,omitempty"`
+}
+
+type ChangesCountResponse struct {
+	Data int `json:"data"`
+}
+
+type ChangesBulkApplyPayload struct {
+	ChangeIds []string `json:"changeIds"`
+}
+
+type ChangesApplyResponse struct {
+	Data []ChangesGetResponseData `json:"data,omitempty"`
+}
+
+
+type UpdateTenantRequest struct {
+	Name 	 string `json:"name"`
+	Data 	 map[string]interface{} `json:"data"`
+	Identifier string `json:"identifier"`
 }

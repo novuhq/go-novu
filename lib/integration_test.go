@@ -254,3 +254,55 @@ func TestDeleteActiveIntegration_Success(t *testing.T) {
 
 	require.NoError(t, err)
 }
+
+func TestSetIntegrationAsPrimary_Success(t *testing.T) {
+	const integrationId = "IntegrationId"
+
+	var response *lib.SetIntegrationAsPrimaryResponse
+	fileToStruct(filepath.Join("../testdata", "set_integration_as_primary_response.json"), &response)
+
+	httpServer := IntegrationTestServer(t, IntegrationServerOptions[interface{}]{
+		ExpectedRequest: IntegrationRequestDetails[interface{}]{
+			Url:    fmt.Sprintf("/v1/integrations/%s/set-primary", integrationId),
+			Method: http.MethodPost,
+		},
+		ExpectedResponse: IntegrationResponseDetails{
+			StatusCode: http.StatusOK,
+			Body:       response,
+		},
+	})
+
+	ctx := context.Background()
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+
+	res, err := novuClient.IntegrationsApi.SetIntegrationAsPrimary(ctx, integrationId)
+
+	assert.Equal(t, response, res)
+	require.NoError(t, err)
+}
+
+func TestGetChannelLimit_Success(t *testing.T) {
+	const channelType = "ChannelType"
+
+	var response *lib.IntegrationChannelLimitResponse
+	fileToStruct(filepath.Join("../testdata", "integration_channel_limit_response.json"), &response)
+
+	httpServer := IntegrationTestServer(t, IntegrationServerOptions[interface{}]{
+		ExpectedRequest: IntegrationRequestDetails[interface{}]{
+			Url:    fmt.Sprintf("/v1/integrations/%s/limit", channelType),
+			Method: http.MethodGet,
+		},
+		ExpectedResponse: IntegrationResponseDetails{
+			StatusCode: http.StatusOK,
+			Body:       response,
+		},
+	})
+
+	ctx := context.Background()
+	novuClient := lib.NewAPIClient(novuApiKey, &lib.Config{BackendURL: lib.MustParseURL(httpServer.URL)})
+
+	res, err := novuClient.IntegrationsApi.GetChannelLimit(ctx, channelType)
+
+	assert.Equal(t, response, res)
+	require.NoError(t, err)
+}
