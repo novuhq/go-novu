@@ -69,30 +69,35 @@ Check the `cmd` directory to see a sample implementation and test files to see s
 
 ## Documentation for API Endpoints
 
-| Class             | Method                                                                                     | HTTP request                                                 | Description                                            |
-| ----------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------ |
-| _EventApi_        | [**Trigger**](https://docs.novu.co/api-reference/events/trigger-event)             | **Post** /events/trigger                                     | Trigger                                                |
-| _EventApi_        | [**TriggerBulk**](https://docs.novu.co/api-reference/events/bulk-trigger-event)                                 | **Post** /v1/events/trigger/bulk                             | Bulk trigger event                                     |
-| _EventApi_        | [**BroadcastToAll**](https://docs.novu.co/api-reference/events/broadcast-event-to-all)                     | **Post** /v1/events/trigger/broadcast                        | Broadcast event to all                                 |
-| _EventApi_        | [**CancelTrigger**](https://docs.novu.co/api-reference/events/cancel-triggered-event)                      | **Delete** /v1/events/trigger/:transactionId                 | Cancel triggered event                                 |
-| _SubscriberApi_   | [**Get**](https://docs.novu.co/api-reference/subscribers/get-subscribers)                                        | **Get** /subscribers/:subscriberId                           | Get a subscriber                                       |
-| _SubscriberApi_   | [**Identify**](https://docs.novu.co/api-reference/subscribers/create-subscriber)            | **Post** /subscribers                                        | Create a subscriber                                    |
-| _SubscriberApi_   | [**Update**](https://docs.novu.co/api-reference/subscribers/update-subscriber)           | **Put** /subscribers/:subscriberID                           | Update subscriber data                                 |
-| _SubscriberApi_   | [**Delete**](https://docs.novu.co/api-reference/subscribers/delete-subscriber)              | **Delete** /subscribers/:subscriberID                        | Removing a subscriber                                  |
-| _SubscriberApi_   | [**Get**](https://docs.novu.co/api-reference/subscribers/get-subscriber)    | **Get** /subscribers/:subscriberId/notifications/feed        | Get a notification feed for a particular subscriber    |
-| _SubscriberApi_   | [**Get**](https://docs.novu.co/api-reference/subscribers/get-the-unseen-in-app-notifications-count-for-subscribers-feed) | **Get** /subscribers/:subscriberId/notifications/feed        | Get the unseen notification count for subscribers feed |
-| _SubscriberApi_   | [**Post**](https://docs.novu.co/api-reference/subscribers/mark-a-subscriber-feed-message-as-seen)                | **Post** /v1/subscribers/:subscriberId/messages/markAs       | Mark a subscriber feed message as seen                 |
-| _SubscriberApi_   | [**Get**](https://docs.novu.co/api-reference/subscribers/get-subscriber-preferences)                            | **Get** /subscribers/:subscriberId/preferences               | Get subscriber preferences                             |
-| _SubscriberApi_   | [**Patch**](https://docs.novu.co/api-reference/subscribers/update-subscriber-preference)                        | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference                           |
-| _IntegrationsApi_ | [**Create**](https://docs.novu.co/api-reference/integrations/create-integration)                                   | **Post** /integrations                                       | Create an integration                                  |
-| _IntegrationsApi_ | [**Update**](https://docs.novu.co/api-reference/integrations/update-integration)                                   | **Put** /integrations/:integrationId                         | Update an integration                                  |
-| _IntegrationsApi_ | [**Delete**](https://docs.novu.co/api-reference/integrations/delete-integration)                                   | **Delete** /integrations/:integrationId                      | Delete an integration                                  |
-| _IntegrationsApi_ | [**Get**](https://docs.novu.co/api-reference/integrations/get-integrations)                                      | **Get** /integrations                                        | Get all integrations                                   |
-| _IntegrationsApi_ | [**GetActive**](https://docs.novu.co/api-reference/integrations/get-active-integrations)                                | **Get** /integrations/active                                 | Get all active integrations                            |
-| _IntegrationsApi_ | [**SetIntegrationAsPrimary**](https://docs.novu.co/api-reference/integrations/set-integration-as-primary)                  | **Post** /integrations/{integrationId}/set-primary           | Set the integration as primary                         |
-| _IntegrationsApi_ | [**GetChannelLimit**](https://docs.novu.co/platform/intergations)                          | **Get** /integrations/{channelType}/limit                    | Get the limits of the channel                          |
-
+Class | Method                                                                           | HTTP request                            | Description
+------------ |----------------------------------------------------------------------------------|-----------------------------------------| -------------
+*EventApi* | [**Trigger**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)   | **Post** /events/trigger                | Trigger
+*EventApi* | [**TriggerBulk**](https://docs.novu.co/api/trigger-event/)   | **Post** /v1/events/trigger/bulk               | Bulk trigger event
+*EventApi* | [**BroadcastToAll**](https://docs.novu.co/api/broadcast-event-to-all/)   | **Post** /v1/events/trigger/broadcast               | Broadcast event to all
+*EventApi* | [**CancelTrigger**](https://docs.novu.co/api/cancel-triggered-event/)   | **Delete** /v1/events/trigger/:transactionId                | Cancel triggered event
+*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber/) | **Get** /subscribers/:subscriberId                 | Get a subscriber
+*SubscriberApi* | [**Identify**](https://docs.novu.co/platform/subscribers#creating-a-subscriber) | **Post** /subscribers                 | Create a subscriber
+*SubscriberApi* | [**Update**](https://docs.novu.co/platform/subscribers#updating-subscriber-data)     | **Put** /subscribers/:subscriberID    | Update subscriber data
+*SubscriberApi* | [**Delete**](https://docs.novu.co/platform/subscribers#removing-a-subscriber)     | **Delete** /subscribers/:subscriberID | Removing a subscriber
+*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-a-notification-feed-for-a-particular-subscriber)     | **Get** /subscribers/:subscriberId/notifications/feed | Get a notification feed for a particular subscriber
+*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-the-unseen-notification-count-for-subscribers-feed)     | **Get** /subscribers/:subscriberId/notifications/feed | Get the unseen notification count for subscribers feed
+*SubscriberApi* | [**Post**](https://docs.novu.co/api/mark-a-subscriber-feed-message-as-seen)     | **Post** /v1/subscribers/:subscriberId/messages/markAs | Mark a subscriber feed message as seen
+*SubscriberApi* | [**Get**](https://docs.novu.co/api/get-subscriber-preferences/)     | **Get** /subscribers/:subscriberId/preferences | Get subscriber preferences
+*SubscriberApi* | [**Patch**](https://docs.novu.co/api/update-subscriber-preference/)     | **Patch** /subscribers/:subscriberId/preferences/:templateId | Update subscriber preference
+*TopicsApi* | [**Get**](https://docs.novu.co/api/filter-topics/) | **Get** /topics | Get a list of topics
+*TopicsApi* | [**Get**](https://docs.novu.co/api/get-topic/) | **Get** /topics/:topicKey | Get a topic by its topic key
+*TopicsApi* | [**Post**](https://docs.novu.co/api/topic-creation/) | **Post** /topics | Create a topic
+*TopicsApi* | [**Patch**](https://docs.novu.co/api/rename-a-topic/) | **Patch** /topics/:topicKey | Rename a topic
+*TopicsApi* | [**Delete**](https://docs.novu.co/api/delete-topic/) | **Delete** /topics/:topicKey | Delete a topic
+*TopicsApi* | [**Post**](https://docs.novu.co/api/subscribers-addition/) | **Post** /topics/:topicKey/subscribers | Add subscribers to a topic by key
+*TopicsApi* | [**Post**](https://docs.novu.co/api/subscribers-removal/) | **Post** /topics/:topicKey/subscribers/removal |Remove subscribers from a topic
+*IntegrationsApi* | [**Create**](https://docs.novu.co/platform/integrations)                         | **Post** /integrations                  | Create an integration
+*IntegrationsApi* | [**Update**](https://docs.novu.co/platform/integrations)                         | **Put** /integrations/:integrationId    | Update an integration
+*IntegrationsApi* | [**Delete**](https://docs.novu.co/platform/integrations)                         | **Delete** /integrations/:integrationId | Delete an integration
+*IntegrationsApi* | [**Get**](https://docs.novu.co/platform/integrations)                            | **Get** /integrations                   | Get all integrations
+*IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/integrations)                      | **Get** /integrations/active            | Get all active integrations
 _InboundParserApi_ | [**Get**](https://docs.novu.co/platform/inbound-parse-webhook/) | **Get** /inbound-parse/mx/status | Validate the mx record setup for the inbound parse functionality
+
 
 ## Authorization (api-key)
 
@@ -112,7 +117,7 @@ As always, if you need additional assistance, join our Discord us a note [here](
 
 ## Contributors
 
-| Name                                           |
-| ---------------------------------------------- |
-| [Oyewole Samuel](https://github.com/samsoft00) |
-| [Dima Grossman](https://github.com/scopsy)     |
+Name |
+------------ |
+[Oyewole Samuel](https://github.com/samsoft00) |
+[Dima Grossman](https://github.com/scopsy) |
