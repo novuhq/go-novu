@@ -3,7 +3,9 @@
 Novu's API exposes the entire Novu features via a standardized programmatic interface. Please refer to the full [documentation](https://docs.novu.co/docs/overview/introduction) to learn more.
 
 ## Installation & Usage
+
 Install the package to your GoLang project.
+
 ```golang
 go get github.com/novuhq/go-novu
 ```
@@ -61,6 +63,7 @@ func main() {
 	fmt.Println(integrations)
 }
 ```
+
 **NOTE**
 Check the `cmd` directory to see a sample implementation and test files to see sample tests
 
@@ -93,6 +96,8 @@ Class | Method                                                                  
 *IntegrationsApi* | [**Delete**](https://docs.novu.co/platform/integrations)                         | **Delete** /integrations/:integrationId | Delete an integration
 *IntegrationsApi* | [**Get**](https://docs.novu.co/platform/integrations)                            | **Get** /integrations                   | Get all integrations
 *IntegrationsApi* | [**GetActive**](https://docs.novu.co/platform/integrations)                      | **Get** /integrations/active            | Get all active integrations
+_InboundParserApi_ | [**Get**](https://docs.novu.co/platform/inbound-parse-webhook/) | **Get** /inbound-parse/mx/status | Validate the mx record setup for the inbound parse functionality
+
 
 ## Authorization (api-key)
 
@@ -100,13 +105,15 @@ Class | Method                                                                  
 - **API key parameter name**: ApiKey
 - **Location**: HTTP header
 
+### For more information about these methods and their parameters, see the [API documentation](https://docs.novu.co/api-reference/overview).  
+
 ## Support and Feedback
 
 Be sure to visit the Novu official [documentation website](https://docs.novu.co/docs) for additional information about our API.
 
 If you find a bug, please post the issue on [Github](https://github.com/novuhq/go-novu/issues).
 
-As always, if you need additional assistance, join our Discord us a note [here](https://discord.gg/TT6TttXjRe).
+As always, if you need additional assistance, join our Discord us a note [here](https://discord.gg/novu).
 
 ## Contributors
 

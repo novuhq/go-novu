@@ -11,8 +11,11 @@ type IIntegration interface {
 	Create(ctx context.Context, request CreateIntegrationRequest) (*IntegrationResponse, error)
 	GetAll(ctx context.Context) (*GetIntegrationsResponse, error)
 	GetActive(ctx context.Context) (*GetIntegrationsResponse, error)
+	GetWebhookSupportStatus(ctx context.Context, providerId string) (bool, error)
 	Update(ctx context.Context, integrationId string, request UpdateIntegrationRequest) (*IntegrationResponse, error)
 	Delete(ctx context.Context, integrationId string) (*IntegrationResponse, error)
+	SetIntegrationAsPrimary(ctx context.Context, integrationId string) (*SetIntegrationAsPrimaryResponse, error)
+	GetChannelLimit(ctx context.Context, channelType string) (*IntegrationChannelLimitResponse, error)
 }
 
 type IntegrationService service
@@ -83,6 +86,25 @@ func (i IntegrationService) GetActive(ctx context.Context) (*GetIntegrationsResp
 	return &response, nil
 }
 
+func (i IntegrationService) GetWebhookSupportStatus(ctx context.Context, providerId string) (bool, error) {
+	URL := i.client.config.BackendURL.JoinPath("integrations", "webhook", "provider", providerId, "status")
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
+
+	if err != nil {
+		return false, err
+	}
+
+	var status bool
+	_, err = i.client.sendRequest(req, &status)
+
+	if err != nil {
+		return false, err
+	}
+
+	return status, nil
+}
+
 func (i IntegrationService) Update(ctx context.Context, integrationId string, request UpdateIntegrationRequest) (*IntegrationResponse, error) {
 	var response IntegrationResponse
 	URL := i.client.config.BackendURL.JoinPath("integrations", integrationId)
@@ -122,6 +144,42 @@ func (i IntegrationService) Delete(ctx context.Context, integrationId string) (*
 
 	_, err = i.client.sendRequest(req, &response)
 
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func (i IntegrationService) SetIntegrationAsPrimary(ctx context.Context, integrationId string) (*SetIntegrationAsPrimaryResponse, error) {
+	var response SetIntegrationAsPrimaryResponse
+
+	URL := i.client.config.BackendURL.JoinPath("integrations", integrationId, "set-primary")
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), http.NoBody)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = i.client.sendRequest(req, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func (i IntegrationService) GetChannelLimit(ctx context.Context, channelType string) (*IntegrationChannelLimitResponse, error) {
+	var response IntegrationChannelLimitResponse
+
+	URL := i.client.config.BackendURL.JoinPath("integrations", channelType, "limit")
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL.String(), http.NoBody)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = i.client.sendRequest(req, &response)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,7 @@ package lib
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -13,8 +14,10 @@ import (
 
 type ISubscribers interface {
 	Identify(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
+	BulkCreate(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error)
 	Get(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	Update(ctx context.Context, subscriberID string, data interface{}) (SubscriberResponse, error)
+	UpdateCredentials(ctx context.Context, subscriberID string, payload SubscriberCredentialPayload) (SubscriberResponse, error)
 	Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error)
 	GetNotificationFeed(ctx context.Context, subscriberID string, opts *SubscriberNotificationFeedOptions) (*SubscriberNotificationFeedResponse, error)
 	GetUnseenCount(ctx context.Context, subscriberID string, opts *SubscriberUnseenCountOptions) (*SubscriberUnseenCountResponse, error)
@@ -36,6 +39,26 @@ func (s *SubscriberService) Identify(ctx context.Context, subscriberID string, d
 
 	jsonBody, _ := json.Marshal(reqBody)
 
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return resp, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
+func (s *SubscriberService) BulkCreate(ctx context.Context, subscribers SubscriberBulkPayload) (SubscriberBulkCreateResponse, error) {
+	var resp SubscriberBulkCreateResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", "bulk")
+	jsonBody, err := json.Marshal(subscribers)
+	if err != nil {
+		return resp, err
+	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, URL.String(), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return resp, err
@@ -85,6 +108,25 @@ func (s *SubscriberService) Update(ctx context.Context, subscriberID string, dat
 	return resp, nil
 }
 
+func (s *SubscriberService) UpdateCredentials(ctx context.Context, subscriberID string, data SubscriberCredentialPayload) (SubscriberResponse, error) {
+	var resp SubscriberResponse
+	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID, "credentials")
+
+	jsonBody, _ := json.Marshal(data)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, URL.String(), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return resp, err
+	}
+
+	_, err = s.client.sendRequest(req, &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
 func (s *SubscriberService) Delete(ctx context.Context, subscriberID string) (SubscriberResponse, error) {
 	var resp SubscriberResponse
 	URL := s.client.config.BackendURL.JoinPath("subscribers", subscriberID)
@@ -108,6 +150,23 @@ func (s *SubscriberService) GetNotificationFeed(ctx context.Context, subscriberI
 
 	if opts != nil {
 		queryValues := URL.Query()
+		if opts.Payload != nil {
+			var payloadOpts Base64Payload
+			payloadString, err := json.Marshal(opts.Payload)
+			if err != nil {
+				return nil, err
+			}
+			opts.Payload = nil
+
+			payloadOpts.Payload = base64.StdEncoding.EncodeToString(payloadString)
+			params, err := GenerateQueryParamsFromStruct(payloadOpts)
+			if err != nil {
+				return nil, err
+			}
+			for _, param := range params {
+				queryValues.Add(param.Key, param.Value)
+			}
+		}
 
 		params, err := GenerateQueryParamsFromStruct(*opts)
 		if err != nil {
