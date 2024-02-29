@@ -2,7 +2,7 @@ repo_name: novuhq/go-novu
 report_id: 906cf754f0629b0fe0a5e9d58f7019cd
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-05T09:22:26+00:00'
+timestamp: '2024-02-29T18:06:08+00:00'
 requested_by: unicodeveloper
 provider: github
 branch: master
@@ -71,8 +71,8 @@ tools:
   last_updated_by: Oyewole S. Abayomi
   last_updated_on: 2022-06-27 07:13:12.000000000 Z
 - name: go-cleanhttp
-  description: 'Cleanhttp Functions for accessing "clean" Go http.Client values The
-    Go standard library contains a default called '
+  description: Cleanhttp Functions for accessing "clean" Go http.Client values The
+    Go standard library contains a default called
   package_url: https://pkg.go.dev/github.com/hashicorp/go-cleanhttp
   version: 0.5.2
   license: MPL-2.0
